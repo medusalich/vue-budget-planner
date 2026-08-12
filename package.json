@@ -1,0 +1,26 @@
+{
+  "name": "vue-budget-planner",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "nuxt dev --open",
+    "build": "nuxt build",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  },
+  "dependencies": {
+    "@mdi/font": "^7.4.47",
+    "nuxt": "^4.5.1",
+    "vue": "^3.5.40",
+    "vue-router": "^5.2.0"
+  },
+  "devDependencies": {
+    "@nuxt/eslint": "^1.16.0",
+    "eslint": "^10.8.0",
+    "vuetify": "^3.13.0",
+    "vuetify-nuxt-module": "^0.19.5"
+  }
+}
