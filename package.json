@@ -9,7 +9,9 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "test": "vitest",
+    "test:run": "vitest run"
   },
   "dependencies": {
     "@mdi/font": "^7.4.47",
@@ -20,6 +22,7 @@
   "devDependencies": {
     "@nuxt/eslint": "^1.16.0",
     "eslint": "^10.8.0",
+    "vitest": "^4.1.10",
     "vuetify": "^3.13.0",
     "vuetify-nuxt-module": "^0.19.5"
   }
