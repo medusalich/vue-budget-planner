@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { parseAmountToCents } from '../app/composables/useMoney';
+import { formatCentsAsEuro, parseAmountToCents } from '../app/composables/useMoney';
 
 describe('parseAmountToCents', () => {
   it('parses a comma as decimal separator', () => {
@@ -36,5 +36,11 @@ describe('parseAmountToCents', () => {
 
   it('returns null for more than two decimal places', () => {
     expect(parseAmountToCents('12,999')).toBeNull();
+  });
+});
+
+describe('formatCentsAsEuro', () => {
+  it('formats cents as a euro amount', () => {
+    expect(formatCentsAsEuro(1250)).toBe('12,50\u00A0€');
   });
 });

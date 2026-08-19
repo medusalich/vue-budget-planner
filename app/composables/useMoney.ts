@@ -17,3 +17,12 @@ export function parseAmountToCents(input: string): number | null {
 
   return Math.round(amount * 100);
 }
+
+export function formatCentsAsEuro(cents: number): string | string {
+  const euros = cents / 100;
+
+  return new Intl.NumberFormat('de-DE', {
+    style: 'currency',
+    currency: 'EUR',
+  }).format(euros);
+}
