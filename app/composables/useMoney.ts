@@ -1,5 +1,5 @@
-/** Parses a user-entered amount into integer cents. Returns null if the input is not a valid amount. */
-export function parseAmount(input: string): number | null {
+/** Negative input is rejected - amounts in this application are always positive. */
+export function parseAmountToCents(input: string): number | null {
   const normalized = input.trim().replace(',', '.');
   if (normalized === '') {
     return null;
