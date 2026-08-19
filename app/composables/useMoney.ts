@@ -5,6 +5,11 @@ export function parseAmountToCents(input: string): number | null {
     return null;
   }
 
+  const decimalDigits = normalized.split('.')[1];
+  if (decimalDigits !== undefined && decimalDigits.length > 2) {
+    return null;
+  }
+
   const amount = Number(normalized);
   if (Number.isNaN(amount) || amount < 0) {
     return null;

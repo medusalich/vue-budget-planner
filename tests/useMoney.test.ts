@@ -33,4 +33,8 @@ describe('parseAmountToCents', () => {
   it('returns null for an empty input', () => {
     expect(parseAmountToCents('')).toBeNull();
   });
+
+  it('returns null for more than two decimal places', () => {
+    expect(parseAmountToCents('12,999')).toBeNull();
+  });
 });
