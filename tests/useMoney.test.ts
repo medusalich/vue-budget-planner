@@ -43,4 +43,8 @@ describe('formatCentsAsEuro', () => {
   it('formats cents as a euro amount', () => {
     expect(formatCentsAsEuro(1250)).toBe('12,50\u00A0€');
   });
+
+  it('keeps the minus sign for negative amounts', () => {
+    expect(formatCentsAsEuro(-1250)).toBe('-12,50\u00A0€');
+  });
 });
