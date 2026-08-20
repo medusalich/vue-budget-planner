@@ -58,4 +58,11 @@ describe('mock data', () => {
     );
     expect(transactionsWithInvalidCreatedAt).toEqual([]);
   });
+
+  it('every transaction was created on or after its booked_on date', () => {
+    const transactionsCreatedBeforeBooking = mockTransactions.filter(
+      (transaction) => transaction.created_at.slice(0, 10) < transaction.booked_on,
+    );
+    expect(transactionsCreatedBeforeBooking).toEqual([]);
+  });
 });
