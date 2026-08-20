@@ -51,4 +51,11 @@ describe('mock data', () => {
     );
     expect(transactionsWithInvalidBookedOn).toEqual([]);
   });
+
+  it('every transaction has a valid created_at date', () => {
+    const transactionsWithInvalidCreatedAt = mockTransactions.filter((transaction) =>
+      Number.isNaN(Date.parse(transaction.created_at)),
+    );
+    expect(transactionsWithInvalidCreatedAt).toEqual([]);
+  });
 });
