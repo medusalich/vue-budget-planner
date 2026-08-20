@@ -20,3 +20,14 @@ export interface Category {
   color: string;
   is_archived: boolean;
 }
+
+export interface Transaction {
+  id: string;
+  amount_cents: number;
+  booked_on: string;
+  category_id: string;
+  account_id: string;
+  note: string | null;
+  created_by: string;
+  created_at: string;
+}
