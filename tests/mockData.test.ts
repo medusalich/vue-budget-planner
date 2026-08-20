@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { mockTransactions } from '../app/data/mockTransactions';
 import { mockAccounts } from '../app/data/mockAccounts';
+import { defaultCategories } from '../app/data/defaultCategories';
 
 describe('mock data', () => {
   it('every transaction references an existing account', () => {
@@ -11,5 +12,15 @@ describe('mock data', () => {
     );
 
     expect(transactionsWithUnknownAccount).toEqual([]);
+  });
+
+  it('every transaction references an existing category', () => {
+    const categoryIds = defaultCategories.map((category) => category.id);
+
+    const transactionsWithUnknownCategory = mockTransactions.filter(
+      (transaction) => !categoryIds.includes(transaction.category_id),
+    );
+
+    expect(transactionsWithUnknownCategory).toEqual([]);
   });
 });
