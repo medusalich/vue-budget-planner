@@ -44,4 +44,11 @@ describe('mock data', () => {
 
     expect(accountsWithUnknownOwner).toEqual([]);
   });
+
+  it('every transaction has a valid booked_on date', () => {
+    const transactionsWithInvalidBookedOn = mockTransactions.filter((transaction) =>
+      Number.isNaN(Date.parse(transaction.booked_on)),
+    );
+    expect(transactionsWithInvalidBookedOn).toEqual([]);
+  });
 });
