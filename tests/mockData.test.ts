@@ -34,4 +34,14 @@ describe('mock data', () => {
 
     expect(transactionsWithUnknownAuthor).toEqual([]);
   });
+
+  it('every account with an owner references an existing profile', () => {
+    const profileIds = mockProfiles.map((profile) => profile.id);
+
+    const accountsWithUnknownOwner = mockAccounts.filter(
+      (account) => account.owner_id !== null && !profileIds.includes(account.owner_id),
+    );
+
+    expect(accountsWithUnknownOwner).toEqual([]);
+  });
 });
