@@ -21,7 +21,9 @@
   },
   "devDependencies": {
     "@nuxt/eslint": "^1.16.0",
+    "@nuxt/test-utils": "^4.1.0",
     "eslint": "^10.8.0",
+    "happy-dom": "^20.11.1",
     "vitest": "^4.1.10",
     "vuetify": "^3.13.0",
     "vuetify-nuxt-module": "^0.19.5"
