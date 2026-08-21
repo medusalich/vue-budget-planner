@@ -5,7 +5,8 @@ const transactions = ref<Transaction[]>([]);
 
 export function useTransactions() {
   async function loadTransactions() {
-    transactions.value = [...mockTransactions];
+    const newestBookedFirst = (a: Transaction, b: Transaction) => b.booked_on.localeCompare(a.booked_on);
+    transactions.value = [...mockTransactions].sort(newestBookedFirst);
   }
   return { transactions, loadTransactions };
 }
