@@ -21,4 +21,14 @@ describe('loadTransactions', () => {
 
     expect(bookingDatesInListOrder).toEqual(bookingDatesNewestFirst);
   });
+
+  it('switches isLoading on while the transactions are on their way and off when they have arrived', async () => {
+    const { isLoading, loadTransactions } = useTransactions();
+
+    const loadInProgress = loadTransactions();
+    expect(isLoading.value).toBe(true);
+
+    await loadInProgress;
+    expect(isLoading.value).toBe(false);
+  });
 });
