@@ -10,10 +10,21 @@ export function useTransactions() {
   async function loadTransactions() {
     error.value = null;
     isLoading.value = true;
-    await new Promise((resolve) => setTimeout(resolve, simulatedRequestMs));
-    const newestBookedFirst = (a: Transaction, b: Transaction) => b.booked_on.localeCompare(a.booked_on);
-    transactions.value = [...mockTransactions].sort(newestBookedFirst);
-    isLoading.value = false;
+
+    try {
+      await new Promise((resolve) => setTimeout(resolve, simulatedRequestMs));
+      const newestBookedFirst = (a: Transaction, b: Transaction) =>
+        b.booked_on.localeCompare(a.booked_on);
+      transactions.value = [...mockTransactions].sort(newestBookedFirst);
+    } catch (caughtError) {
+      if (caughtError instanceof Error) {
+        error.value = caughtError;
+      } else {
+        error.value = new Error(String(caughtError));
+      }
+    } finally {
+      isLoading.value = false;
+    }
   }
 
   async function removeTransaction(transactionId: string) {
