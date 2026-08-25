@@ -1,4 +1,4 @@
-import type { Account } from '../types';
+import type { Account } from '~/types';
 
 export const mockAccounts: Account[] = [
   { id: 'joint-account', name: 'Gemeinsames Konto', owner_id: null, is_archived: false },

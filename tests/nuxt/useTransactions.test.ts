@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { useTransactions } from '../../app/composables/useTransactions';
-import { mockTransactions } from '../../app/data/mockTransactions';
+import { useTransactions } from '~/composables/useTransactions';
+import { mockTransactions } from '~/data/mockTransactions';
 
 describe('useTransactions', () => {
   beforeEach(async () => {
