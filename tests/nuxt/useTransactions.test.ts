@@ -34,4 +34,16 @@ describe('useTransactions', () => {
       expect(isLoading.value).toBe(false);
     });
   });
+
+  describe('removeTransaction', () => {
+    it('removes the given transaction from the list', async () => {
+      const { transactions, removeTransaction } = useTransactions();
+
+      await removeTransaction('tx-001');
+      expect(transactions.value).toHaveLength(mockTransactions.length - 1);
+
+      const idsStillInTransaction = transactions.value.map((transaction) => transaction.id);
+      expect(idsStillInTransaction).not.toContain('tx-001');
+    });
+  });
 });

@@ -13,5 +13,10 @@ export function useTransactions() {
     transactions.value = [...mockTransactions].sort(newestBookedFirst);
     isLoading.value = false;
   }
-  return { transactions, loadTransactions, isLoading };
+
+  async function removeTransaction(transactionId: string) {
+    transactions.value = transactions.value.filter((transaction) => transaction.id !== transactionId);
+  }
+
+  return { transactions, loadTransactions, isLoading, removeTransaction };
 }
