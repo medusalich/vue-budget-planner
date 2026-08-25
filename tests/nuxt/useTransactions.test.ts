@@ -1,34 +1,37 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import { useTransactions } from '../../app/composables/useTransactions';
 import { mockTransactions } from '../../app/data/mockTransactions';
 
-describe('loadTransactions', () => {
-  it('loads all transactions from the mock data', async () => {
-    const { transactions, loadTransactions } = useTransactions();
-
+describe('useTransactions', () => {
+  beforeEach(async () => {
+    const { loadTransactions } = useTransactions();
     await loadTransactions();
-
-    expect(transactions.value).toHaveLength(mockTransactions.length);
   });
 
-  it('sorts the transactions with the newest booking first', async () => {
-    const { transactions, loadTransactions } = useTransactions();
+  describe('loadTransactions', () => {
+    it('loads all transactions from the mock data', () => {
+      const { transactions } = useTransactions();
 
-    await loadTransactions();
+      expect(transactions.value).toHaveLength(mockTransactions.length);
+    });
 
-    const bookingDatesInListOrder = transactions.value.map((transaction) => transaction.booked_on);
-    const bookingDatesNewestFirst = [...bookingDatesInListOrder].sort().reverse();
+    it('sorts the transactions with the newest booking first', () => {
+      const { transactions } = useTransactions();
 
-    expect(bookingDatesInListOrder).toEqual(bookingDatesNewestFirst);
-  });
+      const bookingDatesInListOrder = transactions.value.map((transaction) => transaction.booked_on);
+      const bookingDatesNewestFirst = [...bookingDatesInListOrder].sort().reverse();
 
-  it('switches isLoading on while the transactions are on their way and off when they have arrived', async () => {
-    const { isLoading, loadTransactions } = useTransactions();
+      expect(bookingDatesInListOrder).toEqual(bookingDatesNewestFirst);
+    });
 
-    const loadInProgress = loadTransactions();
-    expect(isLoading.value).toBe(true);
+    it('switches isLoading on while the transactions are on their way and off when they have arrived', async () => {
+      const { isLoading, loadTransactions } = useTransactions();
 
-    await loadInProgress;
-    expect(isLoading.value).toBe(false);
+      const loadInProgress = loadTransactions();
+      expect(isLoading.value).toBe(true);
+
+      await loadInProgress;
+      expect(isLoading.value).toBe(false);
+    });
   });
 });
