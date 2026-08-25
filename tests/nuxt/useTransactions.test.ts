@@ -52,5 +52,15 @@ describe('useTransactions', () => {
       await removeTransaction('tx-921');
       expect(error.value).toBeInstanceOf(Error);
     });
+
+    it('cleaers a previous error when the next removal succeeds', async () => {
+      const { error, removeTransaction } = useTransactions();
+
+      await removeTransaction('tx-921');
+      expect(error.value).toBeInstanceOf(Error);
+
+      await removeTransaction('tx-001');
+      expect(error.value).toBeNull();
+    });
   });
 });

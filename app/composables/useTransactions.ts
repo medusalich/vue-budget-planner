@@ -16,6 +16,7 @@ export function useTransactions() {
   }
 
   async function removeTransaction(transactionId: string) {
+    error.value = null;
     const transactionExists = transactions.value.some((transaction) => transaction.id === transactionId);
 
     if (!transactionExists) {
