@@ -8,6 +8,7 @@ const error = ref<Error | null>(null);
 
 export function useTransactions() {
   async function loadTransactions() {
+    error.value = null;
     isLoading.value = true;
     await new Promise((resolve) => setTimeout(resolve, simulatedRequestMs));
     const newestBookedFirst = (a: Transaction, b: Transaction) => b.booked_on.localeCompare(a.booked_on);

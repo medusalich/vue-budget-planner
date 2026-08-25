@@ -33,6 +33,16 @@ describe('useTransactions', () => {
       await loadInProgress;
       expect(isLoading.value).toBe(false);
     });
+
+    it('clears a previous error when the transactions load again', async () => {
+      const { error, removeTransaction, loadTransactions } = useTransactions();
+
+      await removeTransaction('tx921');
+      expect(error.value).toBeInstanceOf(Error);
+
+      await loadTransactions();
+      expect(error.value).toBeNull();
+    });
   });
 
   describe('removeTransaction', () => {
@@ -53,7 +63,7 @@ describe('useTransactions', () => {
       expect(error.value).toBeInstanceOf(Error);
     });
 
-    it('cleaers a previous error when the next removal succeeds', async () => {
+    it('clears a previous error when the next removal succeeds', async () => {
       const { error, removeTransaction } = useTransactions();
 
       await removeTransaction('tx-921');
