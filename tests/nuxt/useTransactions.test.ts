@@ -45,5 +45,12 @@ describe('useTransactions', () => {
       const idsStillInTransaction = transactions.value.map((transaction) => transaction.id);
       expect(idsStillInTransaction).not.toContain('tx-001');
     });
+
+    it('sets an error when the transaction id does not exist', async () => {
+      const { error, removeTransaction } = useTransactions();
+
+      await removeTransaction('tx-921');
+      expect(error.value).toBeInstanceOf(Error);
+    });
   });
 });

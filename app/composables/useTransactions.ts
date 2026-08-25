@@ -4,6 +4,7 @@ import { mockTransactions } from '~/data/mockTransactions';
 const transactions = ref<Transaction[]>([]);
 const isLoading = ref(false);
 const simulatedRequestMs = 150;
+const error = ref<Error | null>(null);
 
 export function useTransactions() {
   async function loadTransactions() {
@@ -15,8 +16,15 @@ export function useTransactions() {
   }
 
   async function removeTransaction(transactionId: string) {
+    const transactionExists = transactions.value.some((transaction) => transaction.id === transactionId);
+
+    if (!transactionExists) {
+      error.value = new Error(`Transaction ${transactionId} not found`);
+      return;
+    }
+
     transactions.value = transactions.value.filter((transaction) => transaction.id !== transactionId);
   }
 
-  return { transactions, loadTransactions, isLoading, removeTransaction };
+  return { transactions, loadTransactions, isLoading, removeTransaction, error };
 }
