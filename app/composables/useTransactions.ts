@@ -1,10 +1,11 @@
-import type { Transaction } from '~/types';
+import type { Transaction, NewTransaction } from '~/types';
 import { mockTransactions } from '~/data/mockTransactions';
 
 const transactions = ref<Transaction[]>([]);
 const isLoading = ref(false);
-const simulatedRequestMs = 150;
 const error = ref<Error | null>(null);
+const simulatedRequestMs = 150;
+const demoSignedInUserId = 'user-1';
 
 export function useTransactions() {
   async function loadTransactions() {
@@ -39,5 +40,16 @@ export function useTransactions() {
     transactions.value = transactions.value.filter((transaction) => transaction.id !== transactionId);
   }
 
-  return { transactions, loadTransactions, isLoading, removeTransaction, error };
+  async function addTransaction(newTransaction: NewTransaction) {
+    const addedTransaction: Transaction = {
+      ...newTransaction,
+      id: crypto.randomUUID(),
+      created_by: demoSignedInUserId,
+      created_at: new Date().toISOString(),
+    };
+
+    transactions.value = [...transactions.value, addedTransaction];
+  }
+
+  return { transactions, loadTransactions, isLoading, removeTransaction, error, addTransaction };
 }

@@ -31,3 +31,5 @@ export interface Transaction {
   created_by: string;
   created_at: string;
 }
+
+export type NewTransaction = Omit<Transaction, 'id' | 'created_by' | 'created_at'>;
