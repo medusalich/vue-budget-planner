@@ -124,5 +124,21 @@ describe('useTransactions', () => {
       const parsedCreationTimestamp = Date.parse(addedTransaction?.created_at ?? '');
       expect(parsedCreationTimestamp).not.toBeNaN();
     });
+
+    it('clears a previous error when a transaction is added', async () => {
+      const { error, removeTransaction, addTransaction } = useTransactions();
+
+      await removeTransaction('tx-921');
+      expect(error.value).toBeInstanceOf(Error);
+
+      await addTransaction({
+        amount_cents: 12345,
+        booked_on: '2026-09-21',
+        category_id: 'mobility',
+        account_id: 'user-1-account',
+        note: null,
+      });
+      expect(error.value).toBeNull();
+    });
   });
 });

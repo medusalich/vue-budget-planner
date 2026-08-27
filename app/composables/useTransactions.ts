@@ -30,6 +30,7 @@ export function useTransactions() {
 
   async function removeTransaction(transactionId: string) {
     error.value = null;
+
     const transactionExists = transactions.value.some((transaction) => transaction.id === transactionId);
 
     if (!transactionExists) {
@@ -41,6 +42,8 @@ export function useTransactions() {
   }
 
   async function addTransaction(newTransaction: NewTransaction) {
+    error.value = null;
+
     const addedTransaction: Transaction = {
       ...newTransaction,
       id: crypto.randomUUID(),
