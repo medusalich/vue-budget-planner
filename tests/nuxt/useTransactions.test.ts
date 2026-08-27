@@ -87,5 +87,21 @@ describe('useTransactions', () => {
       });
       expect(transactions.value).toHaveLength(mockTransactions.length + 1);
     });
+
+    it('keeps the list sorted with the newest booking first', async () => {
+      const { transactions, addTransaction } = useTransactions();
+
+      await addTransaction({
+        amount_cents: 12345,
+        booked_on: '2026-09-21',
+        category_id: 'mobility',
+        account_id: 'user-1-account',
+        note: null,
+      });
+      const bookingDatesInListOrder = transactions.value.map((transaction) => transaction.booked_on);
+      const bookingDatesNewestFirst = [...bookingDatesInListOrder].sort().reverse();
+
+      expect(bookingDatesInListOrder).toEqual(bookingDatesNewestFirst);
+    });
   });
 });

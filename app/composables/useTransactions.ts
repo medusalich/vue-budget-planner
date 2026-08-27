@@ -6,6 +6,7 @@ const isLoading = ref(false);
 const error = ref<Error | null>(null);
 const simulatedRequestMs = 150;
 const demoSignedInUserId = 'user-1';
+const newestBookedFirst = (a: Transaction, b: Transaction) => b.booked_on.localeCompare(a.booked_on);
 
 export function useTransactions() {
   async function loadTransactions() {
@@ -14,8 +15,7 @@ export function useTransactions() {
 
     try {
       await new Promise((resolve) => setTimeout(resolve, simulatedRequestMs));
-      const newestBookedFirst = (a: Transaction, b: Transaction) =>
-        b.booked_on.localeCompare(a.booked_on);
+
       transactions.value = [...mockTransactions].sort(newestBookedFirst);
     } catch (caughtError) {
       if (caughtError instanceof Error) {
@@ -48,7 +48,7 @@ export function useTransactions() {
       created_at: new Date().toISOString(),
     };
 
-    transactions.value = [...transactions.value, addedTransaction];
+    transactions.value = [...transactions.value, addedTransaction].sort(newestBookedFirst);
   }
 
   return { transactions, loadTransactions, isLoading, removeTransaction, error, addTransaction };
