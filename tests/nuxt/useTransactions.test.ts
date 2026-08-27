@@ -50,7 +50,7 @@ describe('useTransactions', () => {
     it('clears a previous error when the transactions load again', async () => {
       const { error, removeTransaction, loadTransactions } = useTransactions();
 
-      await removeTransaction('tx921');
+      await removeTransaction('tx-921');
       expect(error.value).toBeInstanceOf(Error);
 
       await loadTransactions();
