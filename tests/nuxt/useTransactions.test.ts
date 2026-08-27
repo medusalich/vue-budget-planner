@@ -155,5 +155,15 @@ describe('useTransactions', () => {
       await updateTransaction('tx-921', { booked_on: '2026-09-30' });
       expect(error.value).toBeInstanceOf(Error);
     });
+
+    it('clears a previous error when a transaction is updated', async () => {
+      const { error, removeTransaction, updateTransaction } = useTransactions();
+
+      await removeTransaction('tx-921');
+      expect(error.value).toBeInstanceOf(Error);
+
+      await updateTransaction('tx-001', { amount_cents: 50000 });
+      expect(error.value).toBeNull();
+    });
   });
 });

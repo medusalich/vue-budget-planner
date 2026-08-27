@@ -60,6 +60,8 @@ export function useTransactions() {
   }
 
   async function updateTransaction(transactionId: string, changes: Partial<NewTransaction>) {
+    error.value = null;
+
     const transactionToUpdate = findTransactionOrReportMissing(transactionId);
     if (!transactionToUpdate) return;
 
