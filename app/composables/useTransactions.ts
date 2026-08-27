@@ -8,6 +8,15 @@ const simulatedRequestMs = 150;
 const demoSignedInUserId = 'user-1';
 const newestBookedFirst = (a: Transaction, b: Transaction) => b.booked_on.localeCompare(a.booked_on);
 
+function findTransactionOrReportMissing(transactionId: string) {
+  const foundTransaction = transactions.value.find((transaction) => transaction.id === transactionId);
+
+  if (!foundTransaction) {
+    error.value = new Error(`Transaction ${transactionId} not found`);
+  }
+  return foundTransaction;
+}
+
 export function useTransactions() {
   async function loadTransactions() {
     error.value = null;
@@ -31,12 +40,8 @@ export function useTransactions() {
   async function removeTransaction(transactionId: string) {
     error.value = null;
 
-    const transactionExists = transactions.value.some((transaction) => transaction.id === transactionId);
-
-    if (!transactionExists) {
-      error.value = new Error(`Transaction ${transactionId} not found`);
-      return;
-    }
+    const transactionToRemove = findTransactionOrReportMissing(transactionId);
+    if (!transactionToRemove) return;
 
     transactions.value = transactions.value.filter((transaction) => transaction.id !== transactionId);
   }
@@ -55,12 +60,8 @@ export function useTransactions() {
   }
 
   async function updateTransaction(transactionId: string, changes: Partial<NewTransaction>) {
-    const transactionExists = transactions.value.some((transaction) => transaction.id === transactionId);
-
-    if (!transactionExists) {
-      error.value = new Error(`Transaction ${transactionId} not found`);
-      return;
-    }
+    const transactionToUpdate = findTransactionOrReportMissing(transactionId);
+    if (!transactionToUpdate) return;
 
     transactions.value = transactions.value
       .map((transaction) => {
