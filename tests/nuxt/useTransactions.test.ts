@@ -103,5 +103,26 @@ describe('useTransactions', () => {
 
       expect(bookingDatesInListOrder).toEqual(bookingDatesNewestFirst);
     });
+
+    it('completes the new transaction with an id, an author and a creation timestamp', async () => {
+      const { transactions, addTransaction } = useTransactions();
+
+      await addTransaction({
+        amount_cents: 12345,
+        booked_on: '2026-09-21',
+        category_id: 'mobility',
+        account_id: 'user-1-account',
+        note: null,
+      });
+      const addedTransaction = transactions.value.find(
+        (transaction) => transaction.amount_cents === 12345,
+      );
+      expect(addedTransaction?.created_by).toBe('user-1');
+
+      expect(addedTransaction?.id).toEqual(expect.any(String));
+
+      const parsedCreationTimestamp = Date.parse(addedTransaction?.created_at ?? '');
+      expect(parsedCreationTimestamp).not.toBeNaN();
+    });
   });
 });
