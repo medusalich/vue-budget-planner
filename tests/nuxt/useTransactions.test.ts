@@ -165,5 +165,12 @@ describe('useTransactions', () => {
 
       expect(bookingDatesInListOrder).toEqual(bookingDatesNewestFirst);
     });
+
+    it('sets an error when the transaction id does not exist', async () => {
+      const { error, updateTransaction } = useTransactions();
+
+      await updateTransaction('tx-921', { booked_on: '2026-09-30' });
+      expect(error.value).toBeInstanceOf(Error);
+    });
   });
 });

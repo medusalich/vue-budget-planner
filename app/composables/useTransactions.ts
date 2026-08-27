@@ -55,6 +55,13 @@ export function useTransactions() {
   }
 
   async function updateTransaction(transactionId: string, changes: Partial<NewTransaction>) {
+    const transactionExists = transactions.value.some((transaction) => transaction.id === transactionId);
+
+    if (!transactionExists) {
+      error.value = new Error(`Transaction ${transactionId} not found`);
+      return;
+    }
+
     transactions.value = transactions.value
       .map((transaction) => {
         if (transaction.id !== transactionId) return transaction;
