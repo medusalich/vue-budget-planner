@@ -1,6 +1,14 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { useTransactions } from '~/composables/useTransactions';
 import { mockTransactions } from '~/data/mockTransactions';
+import type { Transaction } from '~/types';
+
+function expectNewestBookingFirst(transactions: Transaction[]) {
+  const bookingDatesInListOrder = transactions.map((transaction) => transaction.booked_on);
+  const bookingDatesNewestFirst = [...bookingDatesInListOrder].sort().reverse();
+
+  expect(bookingDatesInListOrder).toEqual(bookingDatesNewestFirst);
+}
 
 describe('useTransactions', () => {
   beforeEach(async () => {
@@ -18,10 +26,7 @@ describe('useTransactions', () => {
     it('sorts the transactions with the newest booking first', () => {
       const { transactions } = useTransactions();
 
-      const bookingDatesInListOrder = transactions.value.map((transaction) => transaction.booked_on);
-      const bookingDatesNewestFirst = [...bookingDatesInListOrder].sort().reverse();
-
-      expect(bookingDatesInListOrder).toEqual(bookingDatesNewestFirst);
+      expectNewestBookingFirst(transactions.value);
     });
 
     it('switches isLoading on while the transactions are on their way and off when they have arrived', async () => {
@@ -98,10 +103,7 @@ describe('useTransactions', () => {
         account_id: 'user-1-account',
         note: null,
       });
-      const bookingDatesInListOrder = transactions.value.map((transaction) => transaction.booked_on);
-      const bookingDatesNewestFirst = [...bookingDatesInListOrder].sort().reverse();
-
-      expect(bookingDatesInListOrder).toEqual(bookingDatesNewestFirst);
+      expectNewestBookingFirst(transactions.value);
     });
 
     it('completes the new transaction with an id, an author and a creation timestamp', async () => {
@@ -160,10 +162,7 @@ describe('useTransactions', () => {
       const updatedTransaction = transactions.value.find((transaction) => transaction.id === 'tx-001');
       expect(updatedTransaction?.booked_on).toBe('2026-09-30');
 
-      const bookingDatesInListOrder = transactions.value.map((transaction) => transaction.booked_on);
-      const bookingDatesNewestFirst = [...bookingDatesInListOrder].sort().reverse();
-
-      expect(bookingDatesInListOrder).toEqual(bookingDatesNewestFirst);
+      expectNewestBookingFirst(transactions.value);
     });
 
     it('sets an error when the transaction id does not exist', async () => {
