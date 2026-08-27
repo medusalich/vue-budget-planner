@@ -55,11 +55,13 @@ export function useTransactions() {
   }
 
   async function updateTransaction(transactionId: string, changes: Partial<NewTransaction>) {
-    transactions.value = transactions.value.map((transaction) => {
-      if (transaction.id !== transactionId) return transaction;
+    transactions.value = transactions.value
+      .map((transaction) => {
+        if (transaction.id !== transactionId) return transaction;
 
-      return { ...transaction, ...changes };
-    });
+        return { ...transaction, ...changes };
+      })
+      .sort(newestBookedFirst);
   }
 
   return {

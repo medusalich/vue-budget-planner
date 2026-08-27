@@ -151,5 +151,19 @@ describe('useTransactions', () => {
       const updatedTransaction = transactions.value.find((transaction) => transaction.id === 'tx-001');
       expect(updatedTransaction?.amount_cents).toBe(50000);
     });
+
+    it('keeps the list sorted when the booking date changes', async () => {
+      const { transactions, updateTransaction } = useTransactions();
+
+      await updateTransaction('tx-001', { booked_on: '2026-09-30' });
+
+      const updatedTransaction = transactions.value.find((transaction) => transaction.id === 'tx-001');
+      expect(updatedTransaction?.booked_on).toBe('2026-09-30');
+
+      const bookingDatesInListOrder = transactions.value.map((transaction) => transaction.booked_on);
+      const bookingDatesNewestFirst = [...bookingDatesInListOrder].sort().reverse();
+
+      expect(bookingDatesInListOrder).toEqual(bookingDatesNewestFirst);
+    });
   });
 });
