@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { useTransactions } from '~/composables/useTransactions';
 import { mockTransactions } from '~/data/mockTransactions';
-import type { Transaction } from '~/types';
+import type { Transaction, NewTransaction } from '~/types';
 
 function expectNewestBookingFirst(transactions: Transaction[]) {
   const bookingDatesInListOrder = transactions.map((transaction) => transaction.booked_on);
@@ -9,6 +9,14 @@ function expectNewestBookingFirst(transactions: Transaction[]) {
 
   expect(bookingDatesInListOrder).toEqual(bookingDatesNewestFirst);
 }
+
+const newTransactionInput: NewTransaction = {
+  amount_cents: 12345,
+  booked_on: '2026-09-21',
+  category_id: 'mobility',
+  account_id: 'user-1-account',
+  note: null,
+};
 
 describe('useTransactions', () => {
   beforeEach(async () => {
@@ -83,41 +91,23 @@ describe('useTransactions', () => {
     it('adds a transaction to the list', async () => {
       const { transactions, addTransaction } = useTransactions();
 
-      await addTransaction({
-        amount_cents: 12345,
-        booked_on: '2026-09-21',
-        category_id: 'mobility',
-        account_id: 'user-1-account',
-        note: null,
-      });
+      await addTransaction(newTransactionInput);
       expect(transactions.value).toHaveLength(mockTransactions.length + 1);
     });
 
     it('keeps the list sorted with the newest booking first', async () => {
       const { transactions, addTransaction } = useTransactions();
 
-      await addTransaction({
-        amount_cents: 12345,
-        booked_on: '2026-09-21',
-        category_id: 'mobility',
-        account_id: 'user-1-account',
-        note: null,
-      });
+      await addTransaction(newTransactionInput);
       expectNewestBookingFirst(transactions.value);
     });
 
     it('completes the new transaction with an id, an author and a creation timestamp', async () => {
       const { transactions, addTransaction } = useTransactions();
 
-      await addTransaction({
-        amount_cents: 12345,
-        booked_on: '2026-09-21',
-        category_id: 'mobility',
-        account_id: 'user-1-account',
-        note: null,
-      });
+      await addTransaction(newTransactionInput);
       const addedTransaction = transactions.value.find(
-        (transaction) => transaction.amount_cents === 12345,
+        (transaction) => transaction.amount_cents === newTransactionInput.amount_cents,
       );
       expect(addedTransaction?.created_by).toBe('user-1');
 
@@ -133,13 +123,7 @@ describe('useTransactions', () => {
       await removeTransaction('tx-921');
       expect(error.value).toBeInstanceOf(Error);
 
-      await addTransaction({
-        amount_cents: 12345,
-        booked_on: '2026-09-21',
-        category_id: 'mobility',
-        account_id: 'user-1-account',
-        note: null,
-      });
+      await addTransaction(newTransactionInput);
       expect(error.value).toBeNull();
     });
   });
