@@ -141,4 +141,15 @@ describe('useTransactions', () => {
       expect(error.value).toBeNull();
     });
   });
+
+  describe('updateTransaction', () => {
+    it('applies the given change to the transaction', async () => {
+      const { transactions, updateTransaction } = useTransactions();
+
+      await updateTransaction('tx-001', { amount_cents: 50000 });
+
+      const updatedTransaction = transactions.value.find((transaction) => transaction.id === 'tx-001');
+      expect(updatedTransaction?.amount_cents).toBe(50000);
+    });
+  });
 });
