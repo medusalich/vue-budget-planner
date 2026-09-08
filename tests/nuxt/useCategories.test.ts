@@ -33,6 +33,16 @@ describe('useCategories', () => {
 
       expect(categories.value).toHaveLength(defaultCategories.length);
     });
+
+    it('switches isLoading on while the categories are on their way and off when they have arrived', async () => {
+      const { isLoading, loadCategories } = useCategories();
+
+      const loadInProgress = loadCategories();
+      expect(isLoading.value).toBe(true);
+
+      await loadInProgress;
+      expect(isLoading.value).toBe(false);
+    });
   });
 
   describe('findCategoryById', () => {
