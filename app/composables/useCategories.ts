@@ -4,13 +4,26 @@ import { defaultCategories } from '~/data/defaultCategories';
 const categories = ref<Category[]>([]);
 const isLoading = ref(false);
 const simulatedRequestMs = 150;
+const error = ref<Error | null>(null);
 
 export function useCategories() {
   async function loadCategories() {
+    error.value = null;
     isLoading.value = true;
-    await new Promise((resolve) => setTimeout(resolve, simulatedRequestMs));
-    categories.value = [...defaultCategories];
-    isLoading.value = false;
+
+    try {
+      await new Promise((resolve) => setTimeout(resolve, simulatedRequestMs));
+
+      categories.value = [...defaultCategories];
+    } catch (caughtError) {
+      if (caughtError instanceof Error) {
+        error.value = caughtError;
+      } else {
+        error.value = new Error(String(caughtError));
+      }
+    } finally {
+      isLoading.value = false;
+    }
   }
 
   function findCategoryById(categoryId: string) {
@@ -23,5 +36,5 @@ export function useCategories() {
     );
   }
 
-  return { categories, loadCategories, findCategoryById, selectableCategoriesFor, isLoading };
+  return { categories, loadCategories, findCategoryById, selectableCategoriesFor, isLoading, error };
 }
