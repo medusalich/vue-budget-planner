@@ -15,4 +15,13 @@ describe('useCategories', () => {
       expect(categories.value).toHaveLength(defaultCategories.length);
     });
   });
+
+  describe('findCategoryById', () => {
+    it('finds a category by its id', () => {
+      const { findCategoryById } = useCategories();
+
+      const foundCategory = findCategoryById('groceries');
+      expect(foundCategory?.id).toBe('groceries');
+    });
+  });
 });

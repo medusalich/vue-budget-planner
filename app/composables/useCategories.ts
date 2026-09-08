@@ -8,5 +8,9 @@ export function useCategories() {
     categories.value = [...defaultCategories];
   }
 
-  return { categories, loadCategories };
+  function findCategoryById(categoryId: string) {
+    return categories.value.find((category) => category.id === categoryId);
+  }
+
+  return { categories, loadCategories, findCategoryById };
 }
