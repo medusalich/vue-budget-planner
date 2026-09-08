@@ -24,4 +24,12 @@ describe('useCategories', () => {
       expect(foundCategory?.id).toBe('groceries');
     });
   });
+
+  describe('selectableCategoriesFor', () => {
+    it('returns the income categories', () => {
+      const { selectableCategoriesFor } = useCategories();
+
+      expect(selectableCategoriesFor('income')).toHaveLength(3);
+    });
+  });
 });
