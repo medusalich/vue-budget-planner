@@ -13,7 +13,9 @@ export function useCategories() {
   }
 
   function selectableCategoriesFor(categoryType: CategoryType) {
-    return categories.value.filter((category) => category.type === categoryType);
+    return categories.value.filter(
+      (category) => category.type === categoryType && !category.is_archived,
+    );
   }
 
   return { categories, loadCategories, findCategoryById, selectableCategoriesFor };

@@ -1,6 +1,7 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { useCategories } from '~/composables/useCategories';
 import { defaultCategories } from '~/data/defaultCategories';
+import type { Category } from '~/types';
 
 describe('useCategories', () => {
   beforeEach(async () => {
@@ -34,6 +35,35 @@ describe('useCategories', () => {
 
       const allAreIncomeCategories = incomeCategories.every((category) => category.type === 'income');
       expect(allAreIncomeCategories).toBe(true);
+    });
+
+    it('does not offer an archived category', () => {
+      const { categories, selectableCategoriesFor } = useCategories();
+
+      const archivedCategory: Category = {
+        id: 'old-subscriptions',
+        name: 'Alte Abos',
+        type: 'expense',
+        icon: 'mdi-autorenew',
+        color: '#b07800',
+        is_archived: true,
+      };
+
+      const activeCategory: Category = {
+        id: 'groceries',
+        name: 'Lebensmittel',
+        type: 'expense',
+        icon: 'mdi-cart',
+        color: '#2a78d6',
+        is_archived: false,
+      };
+
+      categories.value = [archivedCategory, activeCategory];
+
+      const selectableExpenseCategories = selectableCategoriesFor('expense');
+
+      expect(selectableExpenseCategories).toHaveLength(1);
+      expect(selectableExpenseCategories[0]?.id).toBe('groceries');
     });
   });
 });
