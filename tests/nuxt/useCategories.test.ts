@@ -29,7 +29,11 @@ describe('useCategories', () => {
     it('returns the income categories', () => {
       const { selectableCategoriesFor } = useCategories();
 
-      expect(selectableCategoriesFor('income')).toHaveLength(3);
+      const incomeCategories = selectableCategoriesFor('income');
+      expect(incomeCategories).toHaveLength(3);
+
+      const allAreIncomeCategories = incomeCategories.every((category) => category.type === 'income');
+      expect(allAreIncomeCategories).toBe(true);
     });
   });
 });
