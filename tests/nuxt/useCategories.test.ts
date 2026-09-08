@@ -24,6 +24,33 @@ describe('useCategories', () => {
       const foundCategory = findCategoryById('groceries');
       expect(foundCategory?.id).toBe('groceries');
     });
+
+    it('finds an archived category', () => {
+      const { categories, findCategoryById } = useCategories();
+
+      const archivedCategory: Category = {
+        id: 'old-subscriptions',
+        name: 'Alte Abos',
+        type: 'expense',
+        icon: 'mdi-autorenew',
+        color: '#b07800',
+        is_archived: true,
+      };
+
+      const activeCategory: Category = {
+        id: 'groceries',
+        name: 'Lebensmittel',
+        type: 'expense',
+        icon: 'mdi-cart',
+        color: '#2a78d6',
+        is_archived: false,
+      };
+
+      categories.value = [archivedCategory, activeCategory];
+
+      const foundCategory = findCategoryById('old-subscriptions');
+      expect(foundCategory?.id).toBe('old-subscriptions');
+    });
   });
 
   describe('selectableCategoriesFor', () => {
