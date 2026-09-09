@@ -14,5 +14,15 @@ describe('useProfiles', () => {
 
       expect(profiles.value).toHaveLength(mockProfiles.length);
     });
+
+    it('switches isLoading on while the profiles are on their way and off when they have arrived', async () => {
+      const { isLoading, loadProfiles } = useProfiles();
+
+      const loadInProgress = loadProfiles();
+      expect(isLoading.value).toBe(true);
+
+      await loadInProgress;
+      expect(isLoading.value).toBe(false);
+    });
   });
 });
