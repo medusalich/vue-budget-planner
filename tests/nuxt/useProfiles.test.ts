@@ -25,4 +25,13 @@ describe('useProfiles', () => {
       expect(isLoading.value).toBe(false);
     });
   });
+
+  describe('findProfileById', () => {
+    it('finds a profile by its id', () => {
+      const { findProfileById } = useProfiles();
+
+      const foundProfile = findProfileById('user-1');
+      expect(foundProfile?.id).toBe('user-1');
+    });
+  });
 });

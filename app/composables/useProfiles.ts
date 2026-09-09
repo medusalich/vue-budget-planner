@@ -13,5 +13,9 @@ export function useProfiles() {
     isLoading.value = false;
   }
 
-  return { profiles, loadProfiles, isLoading };
+  function findProfileById(profileId: string) {
+    return profiles.value.find((profile) => profile.id === profileId);
+  }
+
+  return { profiles, loadProfiles, isLoading, findProfileById };
 }
