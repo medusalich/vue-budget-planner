@@ -17,5 +17,7 @@ export function useAccounts() {
     return accounts.value.find((account) => account.id === accountId);
   }
 
-  return { accounts, loadAccounts, isLoading, findAccountById };
+  const selectableAccounts = computed(() => accounts.value.filter((account) => !account.is_archived));
+
+  return { accounts, loadAccounts, isLoading, findAccountById, selectableAccounts };
 }

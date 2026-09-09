@@ -51,4 +51,31 @@ describe('useAccounts', () => {
       expect(foundAccount?.id).toBe('old-savings');
     });
   });
+
+  describe('selectableAccounts', () => {
+    it('does not offer an archived account', () => {
+      const { accounts, selectableAccounts } = useAccounts();
+
+      const archivedAccount: Account = {
+        id: 'old-savings',
+        name: 'Altes Sparkonto',
+        owner_id: 'user-1',
+        is_archived: true,
+      };
+
+      const activeAccount: Account = {
+        id: 'joint-account',
+        name: 'Gemeinsames Konto',
+        owner_id: null,
+        is_archived: false,
+      };
+
+      accounts.value = [archivedAccount, activeAccount];
+
+      const offeredAccounts = selectableAccounts.value;
+
+      expect(offeredAccounts).toHaveLength(1);
+      expect(offeredAccounts[0]?.id).toBe('joint-account');
+    });
+  });
 });
