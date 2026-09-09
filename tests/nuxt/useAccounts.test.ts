@@ -1,6 +1,7 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { useAccounts } from '~/composables/useAccounts';
 import { mockAccounts } from '~/data/mockAccounts';
+import type { Account } from '~/types';
 
 describe('useAccounts', () => {
   beforeEach(async () => {
@@ -32,6 +33,22 @@ describe('useAccounts', () => {
 
       const foundAccount = findAccountById('joint-account');
       expect(foundAccount?.id).toBe('joint-account');
+    });
+
+    it('finds an archived account', () => {
+      const { accounts, findAccountById } = useAccounts();
+
+      const archivedAccount: Account = {
+        id: 'old-savings',
+        name: 'Altes Sparkonto',
+        owner_id: 'user-1',
+        is_archived: true,
+      };
+
+      accounts.value = [archivedAccount];
+
+      const foundAccount = findAccountById('old-savings');
+      expect(foundAccount?.id).toBe('old-savings');
     });
   });
 });
