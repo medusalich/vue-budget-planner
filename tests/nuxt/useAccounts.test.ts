@@ -14,5 +14,15 @@ describe('useAccounts', () => {
 
       expect(accounts.value).toHaveLength(mockAccounts.length);
     });
+
+    it('switches isLoading on while the accounts are on their way and off when they have arrived', async () => {
+      const { isLoading, loadAccounts } = useAccounts();
+
+      const loadInProgress = loadAccounts();
+      expect(isLoading.value).toBe(true);
+
+      await loadInProgress;
+      expect(isLoading.value).toBe(false);
+    });
   });
 });
