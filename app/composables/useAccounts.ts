@@ -13,5 +13,9 @@ export function useAccounts() {
     isLoading.value = false;
   }
 
-  return { accounts, loadAccounts, isLoading };
+  function findAccountById(accountId: string) {
+    return accounts.value.find((account) => account.id === accountId);
+  }
+
+  return { accounts, loadAccounts, isLoading, findAccountById };
 }

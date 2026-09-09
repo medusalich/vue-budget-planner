@@ -25,4 +25,13 @@ describe('useAccounts', () => {
       expect(isLoading.value).toBe(false);
     });
   });
+
+  describe('findAccountById', () => {
+    it('finds an account by its id', () => {
+      const { findAccountById } = useAccounts();
+
+      const foundAccount = findAccountById('joint-account');
+      expect(foundAccount?.id).toBe('joint-account');
+    });
+  });
 });
