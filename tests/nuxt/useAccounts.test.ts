@@ -3,6 +3,20 @@ import { useAccounts } from '~/composables/useAccounts';
 import { mockAccounts } from '~/data/mockAccounts';
 import type { Account } from '~/types';
 
+const archivedAccount: Account = {
+  id: 'old-savings',
+  name: 'Altes Sparkonto',
+  owner_id: 'user-1',
+  is_archived: true,
+};
+
+const activeAccount: Account = {
+  id: 'joint-account',
+  name: 'Gemeinsames Konto',
+  owner_id: null,
+  is_archived: false,
+};
+
 describe('useAccounts', () => {
   beforeEach(async () => {
     const { loadAccounts } = useAccounts();
@@ -38,13 +52,6 @@ describe('useAccounts', () => {
     it('finds an archived account', () => {
       const { accounts, findAccountById } = useAccounts();
 
-      const archivedAccount: Account = {
-        id: 'old-savings',
-        name: 'Altes Sparkonto',
-        owner_id: 'user-1',
-        is_archived: true,
-      };
-
       accounts.value = [archivedAccount];
 
       const foundAccount = findAccountById('old-savings');
@@ -55,20 +62,6 @@ describe('useAccounts', () => {
   describe('selectableAccounts', () => {
     it('does not offer an archived account', () => {
       const { accounts, selectableAccounts } = useAccounts();
-
-      const archivedAccount: Account = {
-        id: 'old-savings',
-        name: 'Altes Sparkonto',
-        owner_id: 'user-1',
-        is_archived: true,
-      };
-
-      const activeAccount: Account = {
-        id: 'joint-account',
-        name: 'Gemeinsames Konto',
-        owner_id: null,
-        is_archived: false,
-      };
 
       accounts.value = [archivedAccount, activeAccount];
 
