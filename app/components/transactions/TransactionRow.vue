@@ -1,7 +1,6 @@
 <template>
   <li>
-    {{ formatIsoDateAsGermanDate(transaction.booked_on) }} |
-    {{ formatCentsAsEuro(transaction.amount_cents) }} |
+    {{ formatIsoDateAsGermanDate(transaction.booked_on) }} | {{ formattedAmount }} |
     {{ category?.name }}
   </li>
 </template>
@@ -13,4 +12,9 @@
   const { findCategoryById } = useCategories();
 
   const category = computed(() => findCategoryById(props.transaction.category_id));
+  const formattedAmount = computed(() =>
+    category.value
+      ? formatCentsAsSignedEuro(props.transaction.amount_cents, category.value.type)
+      : formatCentsAsEuro(props.transaction.amount_cents),
+  );
 </script>
