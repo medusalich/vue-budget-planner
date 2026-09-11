@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { formatCentsAsEuro, parseAmountToCents } from '../app/composables/useMoney';
+import { formatCentsAsEuro, parseAmountToCents } from '../app/utils/money';
 
 describe('parseAmountToCents', () => {
   it('parses a comma as decimal separator', () => {
