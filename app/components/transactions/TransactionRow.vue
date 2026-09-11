@@ -1,7 +1,7 @@
 <template>
   <li>
     {{ formatIsoDateAsGermanDate(transaction.booked_on) }} | {{ formattedAmount }} |
-    {{ category?.name }}
+    <v-icon :icon="category?.icon" /> {{ category?.name }}
   </li>
 </template>
 
