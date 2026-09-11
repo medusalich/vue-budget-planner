@@ -1,6 +1,7 @@
 <template>
   <h2>Buchungen</h2>
-  <ul>
+  <p v-if="isLoading">Buchungen werden geladen</p>
+  <ul v-else>
     <li v-for="transaction in transactions" :key="transaction.id">
       {{ transaction.booked_on }} |
       {{ formatCentsAsEuro(transaction.amount_cents) }}
@@ -9,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-  const { transactions, loadTransactions } = useTransactions();
+  const { transactions, loadTransactions, isLoading } = useTransactions();
 
   onMounted(loadTransactions);
 </script>
