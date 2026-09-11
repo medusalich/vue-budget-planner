@@ -3,7 +3,7 @@
   <p v-if="isLoading">Buchungen werden geladen</p>
   <ul v-else>
     <li v-for="transaction in transactions" :key="transaction.id">
-      {{ transaction.booked_on }} |
+      {{ formatIsoDateAsGermanDate(transaction.booked_on) }} |
       {{ formatCentsAsEuro(transaction.amount_cents) }}
     </li>
   </ul>
