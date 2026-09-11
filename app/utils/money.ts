@@ -1,3 +1,5 @@
+import type { CategoryType } from '~/types';
+
 /** Negative input is rejected - amounts in this application are always positive. */
 export function parseAmountToCents(input: string): number | null {
   const normalized = input.trim().replace(',', '.');
@@ -25,4 +27,8 @@ export function formatCentsAsEuro(cents: number): string {
     style: 'currency',
     currency: 'EUR',
   }).format(euros);
+}
+
+export function formatCentsAsSignedEuro(cents: number, categoryType: CategoryType): string {
+  return formatCentsAsEuro(categoryType === 'expense' ? -cents : cents);
 }

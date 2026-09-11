@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { formatCentsAsEuro, parseAmountToCents } from '../app/utils/money';
+import { formatCentsAsEuro, parseAmountToCents, formatCentsAsSignedEuro } from '../app/utils/money';
 
 describe('parseAmountToCents', () => {
   it('parses a comma as decimal separator', () => {
@@ -46,5 +46,15 @@ describe('formatCentsAsEuro', () => {
 
   it('keeps the minus sign for negative amounts', () => {
     expect(formatCentsAsEuro(-1250)).toBe('-12,50\u00A0€');
+  });
+});
+
+describe('formatCentsAsSignedEuro', () => {
+  it('shows a minus sign before the amount', () => {
+    expect(formatCentsAsSignedEuro(1250, 'expense')).toBe('-12,50\u00A0€');
+  });
+
+  it('shows no sign before the income amount', () => {
+    expect(formatCentsAsSignedEuro(1250, 'income')).toBe('12,50\u00A0€');
   });
 });
