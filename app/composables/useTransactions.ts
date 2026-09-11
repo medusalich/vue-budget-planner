@@ -5,7 +5,6 @@ const transactions = ref<Transaction[]>([]);
 const isLoading = ref(false);
 const error = ref<Error | null>(null);
 const simulatedRequestMs = 150;
-const demoSignedInUserId = 'user-1';
 const newestBookedFirst = (a: Transaction, b: Transaction) => b.booked_on.localeCompare(a.booked_on);
 
 function findTransactionOrReportMissing(transactionId: string) {
@@ -18,6 +17,8 @@ function findTransactionOrReportMissing(transactionId: string) {
 }
 
 export function useTransactions() {
+  const { signedInMemberId } = useSignedInMember();
+
   async function loadTransactions() {
     error.value = null;
     isLoading.value = true;
@@ -52,7 +53,7 @@ export function useTransactions() {
     const addedTransaction: Transaction = {
       ...newTransaction,
       id: crypto.randomUUID(),
-      created_by: demoSignedInUserId,
+      created_by: signedInMemberId.value,
       created_at: new Date().toISOString(),
     };
 
