@@ -1,11 +1,13 @@
 <template>
-  <li class="d-flex ga-4">
-    <span>{{ formatIsoDateAsGermanDate(transaction.booked_on) }}</span>
-    <span><v-icon :icon="category?.icon" /> {{ category?.name }}</span>
-    <span v-if="transaction.note">{{ transaction.note }}</span>
-    <v-icon v-else class="opacity-30">mdi-minus</v-icon>
-    <span>{{ formattedAmount }}</span>
-  </li>
+  <v-row tag="li">
+    <v-col>{{ formatIsoDateAsGermanDate(transaction.booked_on) }}</v-col>
+    <v-col><v-icon :icon="category?.icon" /> {{ category?.name }}</v-col>
+    <v-col>
+      <span v-if="transaction.note">{{ transaction.note }}</span>
+      <v-icon v-else class="opacity-30">mdi-minus</v-icon>
+    </v-col>
+    <v-col>{{ formattedAmount }}</v-col>
+  </v-row>
 </template>
 
 <script setup lang="ts">
