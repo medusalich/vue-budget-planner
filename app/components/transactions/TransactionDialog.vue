@@ -25,6 +25,12 @@
           suffix="€"
           inputmode="decimal"
           :rules="[validateEnteredAmount]" />
+        <v-text-field
+          v-model="enteredBookedOn"
+          type="date"
+          label="Zahlungsdatum"
+          :max="todayAsIsoDate()"
+          :rules="[validateBookedOnIsEntered, validateBookedOnIsNotInFuture]" />
       </v-card-text>
       <v-card-actions>
         <v-btn @click="isOpen = false">Schließen</v-btn>
@@ -54,5 +60,21 @@
 
   function validateEnteredAmount(value: string) {
     return parseAmountToCents(value) !== null || 'Betrag wie 12,50 eingeben, ohne Tausenderpunkt';
+  }
+
+  const enteredBookedOn = ref('');
+
+  function todayAsIsoDate() {
+    return formatDateAsIsoDate(new Date());
+  }
+
+  function validateBookedOnIsEntered(value: string) {
+    return value !== '' || 'Zahlungsdatum wählen';
+  }
+
+  function validateBookedOnIsNotInFuture(value: string) {
+    return (
+      mayBeBookedOn(value, todayAsIsoDate()) || 'Das Zahlungsdatum darf nicht in der Zukunft liegen'
+    );
   }
 </script>
