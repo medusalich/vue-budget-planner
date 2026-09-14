@@ -19,6 +19,12 @@
           :disabled="isCategoryTypeMissing"
           :hint="isCategoryTypeMissing ? 'Erst die Art der Buchung wählen' : undefined"
           persistent-hint />
+        <v-text-field
+          v-model="enteredAmount"
+          label="Betrag"
+          suffix="€"
+          inputmode="decimal"
+          :rules="[validateEnteredAmount]" />
       </v-card-text>
       <v-card-actions>
         <v-btn @click="isOpen = false">Schließen</v-btn>
@@ -43,4 +49,10 @@
   });
 
   const isCategoryTypeMissing = computed(() => selectedCategoryType.value === null);
+
+  const enteredAmount = ref('');
+
+  function validateEnteredAmount(value: string) {
+    return parseAmountToCents(value) !== null || 'Betrag wie 12,50 eingeben, ohne Tausenderpunkt';
+  }
 </script>
