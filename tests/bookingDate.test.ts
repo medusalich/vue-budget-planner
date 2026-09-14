@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { mayBeBookedOn, formatIsoDateAsGermanDate } from '../app/utils/bookingDate';
+import { mayBeBookedOn, formatIsoDateAsGermanDate, formatDateAsIsoDate } from '../app/utils/bookingDate';
 
 const yesterday = '2026-09-10';
 const today = '2026-09-11';
@@ -22,5 +22,11 @@ describe('mayBeBookedOn', () => {
 describe('formatIsoDateAsGermanDate', () => {
   it('turns the ISO order into day, month, year with dots', () => {
     expect(formatIsoDateAsGermanDate('2026-07-31')).toBe('31.07.2026');
+  });
+});
+
+describe('formatDateAsIsoDate', () => {
+  it('returns the calendar day of the local time, even shortly after midnight', () => {
+    expect(formatDateAsIsoDate(new Date(2026, 6, 1, 0, 30))).toBe('2026-07-01');
   });
 });
