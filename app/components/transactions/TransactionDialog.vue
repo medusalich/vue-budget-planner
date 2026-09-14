@@ -10,6 +10,7 @@
           <v-radio label="Einnahme" value="income" />
           <v-radio label="Ausgabe" value="expense" />
         </v-radio-group>
+
         <v-select
           v-model="selectedCategoryId"
           :items="selectableCategories"
@@ -19,18 +20,27 @@
           :disabled="isCategoryTypeMissing"
           :hint="isCategoryTypeMissing ? 'Erst die Art der Buchung wählen' : undefined"
           persistent-hint />
+
         <v-text-field
           v-model="enteredAmount"
           label="Betrag"
           suffix="€"
           inputmode="decimal"
           :rules="[validateEnteredAmount]" />
+
         <v-text-field
           v-model="enteredBookedOn"
           type="date"
           label="Zahlungsdatum"
           :max="todayAsIsoDate()"
           :rules="[validateBookedOnIsEntered, validateBookedOnIsNotInFuture]" />
+
+        <v-select
+          v-model="selectedAccountId"
+          :items="selectableAccounts"
+          item-title="name"
+          item-value="id"
+          label="Konto" />
       </v-card-text>
       <v-card-actions>
         <v-btn @click="isOpen = false">Schließen</v-btn>
@@ -77,4 +87,8 @@
       mayBeBookedOn(value, todayAsIsoDate()) || 'Das Zahlungsdatum darf nicht in der Zukunft liegen'
     );
   }
+
+  const { loadAccounts, selectableAccounts } = useAccounts();
+  const selectedAccountId = ref<string | null>(null);
+  onMounted(loadAccounts);
 </script>
