@@ -44,7 +44,10 @@
           item-value="id"
           label="Konto"
           :rules="[requireSelection('Konto wählen')]" />
+
+        <v-text-field v-model="enteredNote" label="Notiz (optional)" maxlength="60" counter />
       </v-card-text>
+
       <v-card-actions>
         <v-btn @click="isOpen = false">Schließen</v-btn>
       </v-card-actions>
@@ -98,4 +101,6 @@
   function requireSelection(message: string) {
     return (value: string | null) => value !== null || message;
   }
+
+  const enteredNote = ref('');
 </script>
