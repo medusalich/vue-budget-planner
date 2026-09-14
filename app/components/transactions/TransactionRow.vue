@@ -6,7 +6,7 @@
       <span v-if="transaction.note">{{ transaction.note }}</span>
       <v-icon v-else class="opacity-30">mdi-minus</v-icon>
     </v-col>
-    <v-col md="3">{{ formattedAmount }}</v-col>
+    <v-col md="3" class="text-right">{{ formattedAmount }}</v-col>
   </v-row>
 </template>
 
