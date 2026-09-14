@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="isOpen">
+  <v-dialog v-model="isOpen" max-width="800">
     <v-card title="Buchung erfassen">
       <v-form ref="transactionForm" @submit.prevent="saveTransaction">
         <v-card-text>
@@ -49,11 +49,14 @@
           <v-text-field v-model="enteredNote" label="Notiz (optional)" maxlength="60" counter />
         </v-card-text>
 
-        <v-card-actions>
+        <v-card-actions class="justify-center">
           <v-btn @click="isOpen = false">Schließen</v-btn>
           <v-btn type="submit" color="primary">Speichern</v-btn>
         </v-card-actions>
       </v-form>
+      <v-snackbar v-model="isSavedNoticeVisible" attach contained location="center" color="success">
+        <v-icon icon="mdi-check-circle" /> Buchung gespeichert
+      </v-snackbar>
     </v-card>
   </v-dialog>
 </template>
@@ -133,6 +136,7 @@
     );
 
     await clearEnteredFields();
+    isSavedNoticeVisible.value = true;
   }
 
   async function clearEnteredFields() {
@@ -146,4 +150,6 @@
     await nextTick();
     transactionForm.value?.resetValidation();
   }
+
+  const isSavedNoticeVisible = ref(false);
 </script>
