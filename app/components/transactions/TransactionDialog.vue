@@ -6,7 +6,8 @@
           v-model="selectedCategoryType"
           inline
           label="Art der Buchung"
-          @update:model-value="selectedCategoryId = null">
+          @update:model-value="selectedCategoryId = null"
+          :rules="[requireSelection('Art der Buchung wählen')]">
           <v-radio label="Einnahme" value="income" />
           <v-radio label="Ausgabe" value="expense" />
         </v-radio-group>
@@ -19,7 +20,8 @@
           label="Kategorie"
           :disabled="isCategoryTypeMissing"
           :hint="isCategoryTypeMissing ? 'Erst die Art der Buchung wählen' : undefined"
-          persistent-hint />
+          persistent-hint
+          :rules="[requireSelection('Kategorie wählen')]" />
 
         <v-text-field
           v-model="enteredAmount"
@@ -40,7 +42,8 @@
           :items="selectableAccounts"
           item-title="name"
           item-value="id"
-          label="Konto" />
+          label="Konto"
+          :rules="[requireSelection('Konto wählen')]" />
       </v-card-text>
       <v-card-actions>
         <v-btn @click="isOpen = false">Schließen</v-btn>
@@ -91,4 +94,8 @@
   const { loadAccounts, selectableAccounts } = useAccounts();
   const selectedAccountId = ref<string | null>(null);
   onMounted(loadAccounts);
+
+  function requireSelection(message: string) {
+    return (value: string | null) => value !== null || message;
+  }
 </script>
