@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="isOpen">
     <v-card title="Buchung erfassen">
-      <v-form @submit.prevent="saveTransaction">
+      <v-form ref="transactionForm" @submit.prevent="saveTransaction">
         <v-card-text>
           <v-radio-group
             v-model="selectedCategoryType"
@@ -109,6 +109,7 @@
   const enteredNote = ref('');
 
   const { addTransaction } = useTransactions();
+  const transactionForm = useTemplateRef('transactionForm');
 
   async function saveTransaction(event: SubmitEventPromise) {
     const { valid } = await event;
@@ -130,5 +131,19 @@
         note: enteredNote.value,
       }),
     );
+
+    await clearEnteredFields();
+  }
+
+  async function clearEnteredFields() {
+    selectedCategoryType.value = null;
+    selectedCategoryId.value = null;
+    enteredAmount.value = '';
+    enteredBookedOn.value = '';
+    selectedAccountId.value = null;
+    enteredNote.value = '';
+
+    await nextTick();
+    transactionForm.value?.resetValidation();
   }
 </script>
