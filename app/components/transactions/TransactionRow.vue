@@ -1,14 +1,16 @@
 <template>
-  <v-row tag="li">
-    <v-col cols="6" md="2">{{ formatIsoDateAsGermanDate(transaction.booked_on) }}</v-col>
-    <v-col cols="6" md="4" class="text-right text-md-left">
+  <v-row tag="li" class="ma-0">
+    <v-col cols="6" md="2" class="pb-1 pb-md-3">{{
+      formatIsoDateAsGermanDate(transaction.booked_on)
+    }}</v-col>
+    <v-col cols="6" md="4" class="text-right text-md-left pb-1 pb-md-3">
       <v-icon :icon="category?.icon" /> {{ category?.name }}</v-col
     >
-    <v-col cols="6" md="">
+    <v-col cols="6" md="" class="pt-1 pt-md-3">
       <span v-if="transaction.note">{{ transaction.note }}</span>
       <v-icon v-else class="opacity-30">mdi-minus</v-icon>
     </v-col>
-    <v-col cols="6" md="3" class="text-right">{{ formattedAmount }}</v-col>
+    <v-col cols="6" md="3" class="text-right pt-1 pt-md-3">{{ formattedAmount }}</v-col>
   </v-row>
 </template>
 
