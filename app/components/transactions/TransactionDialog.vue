@@ -5,7 +5,7 @@
     persistent
     no-click-animation
     @click:outside="closeOrAskToDiscard"
-    @keydown.esc="closeOrAskToDiscard">
+    @keydown.esc="goBackOnEscape">
     <v-card :title="dialogMode === 'create' ? 'Buchung erfassen' : undefined">
       <v-form ref="transactionForm" @submit.prevent="saveTransaction" v-if="dialogMode === 'create'">
         <v-card-text>
@@ -65,9 +65,8 @@
           <v-icon icon="mdi-alert-circle-outline" color="error" size="48" />
         </div>
         <v-card-title class="text-center">Eingaben verwerfen?</v-card-title>
-        <v-card-text class="text-center">Die eingegebenen Werte gehen verloren.</v-card-text>
         <v-card-actions class="flex-column">
-          <v-btn width="220" variant="tonal" @click="dialogMode = 'create'"> Weiter bearbeiten </v-btn>
+          <v-btn width="220" variant="tonal" @click="continueEditing"> Weiter bearbeiten </v-btn>
           <v-btn width="220" color="error" variant="flat" @click="discardEnteredFieldsAndClose">
             Verwerfen
           </v-btn>
@@ -197,5 +196,17 @@
     await clearEnteredFields();
     dialogMode.value = 'create';
     isOpen.value = false;
+  }
+
+  function continueEditing() {
+    dialogMode.value = 'create';
+  }
+
+  function goBackOnEscape() {
+    if (dialogMode.value === 'confirmDiscard') {
+      continueEditing();
+      return;
+    }
+    closeOrAskToDiscard();
   }
 </script>
