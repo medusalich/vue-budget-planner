@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="isOpen" max-width="800">
     <v-card title="Buchung erfassen">
-      <v-form ref="transactionForm" @submit.prevent="saveTransaction">
+      <v-form ref="transactionForm" @submit.prevent="saveTransaction" v-if="dialogMode === 'create'">
         <v-card-text>
           <v-radio-group
             v-model="selectedCategoryType"
@@ -50,10 +50,17 @@
         </v-card-text>
 
         <v-card-actions class="justify-center">
-          <v-btn @click="isOpen = false">Schließen</v-btn>
+          <v-btn @click="closeOrAskToDiscard"> Schließen </v-btn>
           <v-btn type="submit" color="primary">Speichern</v-btn>
         </v-card-actions>
       </v-form>
+      <template v-else>
+        <v-card-text>Eingaben verwerfen?</v-card-text>
+        <v-card-actions class="justify-center">
+          <v-btn @click="dialogMode = 'create'">Weiter bearbeiten</v-btn>
+          <v-btn @click="discardEnteredFieldsAndClose">Verwerfen</v-btn>
+        </v-card-actions>
+      </template>
       <v-snackbar v-model="isSavedNoticeVisible" attach contained location="center" color="success">
         <v-icon icon="mdi-check-circle" /> Buchung gespeichert
       </v-snackbar>
@@ -153,4 +160,30 @@
   }
 
   const isSavedNoticeVisible = ref(false);
+
+  type TransactionDialogMode = 'create' | 'confirmDiscard';
+  const dialogMode = ref<TransactionDialogMode>('create');
+
+  function closeOrAskToDiscard() {
+    if (
+      !hasAnyEnteredValue({
+        selectedCategoryType: selectedCategoryType.value,
+        selectedCategoryId: selectedCategoryId.value,
+        enteredAmount: enteredAmount.value,
+        enteredBookedOn: enteredBookedOn.value,
+        selectedAccountId: selectedAccountId.value,
+        enteredNote: enteredNote.value,
+      })
+    ) {
+      isOpen.value = false;
+      return;
+    }
+    dialogMode.value = 'confirmDiscard';
+  }
+
+  async function discardEnteredFieldsAndClose() {
+    await clearEnteredFields();
+    dialogMode.value = 'create';
+    isOpen.value = false;
+  }
 </script>
