@@ -10,5 +10,5 @@ export interface TransactionForm {
 }
 
 export function hasAnyEnteredValue(form: TransactionForm): boolean {
-  return form.enteredNote !== '';
+  return Object.values(form).some((value) => value !== null && value !== '');
 }
