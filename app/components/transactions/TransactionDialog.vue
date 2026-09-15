@@ -1,6 +1,6 @@
 <template>
-  <v-dialog v-model="isOpen" max-width="800">
-    <v-card title="Buchung erfassen">
+  <v-dialog v-model="isOpen" :max-width="dialogMode === 'create' ? 800 : 400">
+    <v-card :title="dialogMode === 'create' ? 'Buchung erfassen' : undefined">
       <v-form ref="transactionForm" @submit.prevent="saveTransaction" v-if="dialogMode === 'create'">
         <v-card-text>
           <v-radio-group
@@ -50,15 +50,21 @@
         </v-card-text>
 
         <v-card-actions class="justify-center">
-          <v-btn @click="closeOrAskToDiscard"> Schließen </v-btn>
+          <v-btn @click="closeOrAskToDiscard">Schließen</v-btn>
           <v-btn type="submit" color="primary">Speichern</v-btn>
         </v-card-actions>
       </v-form>
       <template v-else>
-        <v-card-text>Eingaben verwerfen?</v-card-text>
-        <v-card-actions class="justify-center">
-          <v-btn @click="dialogMode = 'create'">Weiter bearbeiten</v-btn>
-          <v-btn @click="discardEnteredFieldsAndClose">Verwerfen</v-btn>
+        <div class="text-center pt-6">
+          <v-icon icon="mdi-alert-circle-outline" color="error" size="48" />
+        </div>
+        <v-card-title class="text-center">Eingaben verwerfen?</v-card-title>
+        <v-card-text class="text-center">Die eingegebenen Werte gehen verloren.</v-card-text>
+        <v-card-actions class="flex-column">
+          <v-btn width="220" variant="tonal" @click="dialogMode = 'create'"> Weiter bearbeiten </v-btn>
+          <v-btn width="220" color="error" variant="flat" @click="discardEnteredFieldsAndClose">
+            Verwerfen
+          </v-btn>
         </v-card-actions>
       </template>
       <v-snackbar v-model="isSavedNoticeVisible" attach contained location="center" color="success">
