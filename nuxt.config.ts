@@ -24,4 +24,17 @@ export default defineNuxtConfig({
   },
 
   components: [{ path: '~/components', pathPrefix: false }],
+
+  vuetify: {
+    vuetifyOptions: {
+      defaults: {
+        VBtn: { rounded: 'lg' },
+        VCard: { rounded: 'lg' },
+        VTextField: { rounded: 'lg' },
+        VSelect: { rounded: 'lg' },
+        VSnackbar: { rounded: 'lg' },
+        VSheet: { rounded: 'lg' },
+      },
+    },
+  },
 });
