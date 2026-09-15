@@ -9,7 +9,7 @@
             label="Art der Buchung"
             @update:model-value="selectedCategoryId = null"
             :rules="[requireSelection('Art der Buchung wählen')]">
-            <v-radio label="Einnahme" value="income" />
+            <v-radio label="Einnahme" value="income" id="category-type-income" />
             <v-radio label="Ausgabe" value="expense" />
           </v-radio-group>
 
@@ -137,6 +137,7 @@
 
     await clearEnteredFields();
     isSavedNoticeVisible.value = true;
+    document.getElementById('category-type-income')?.focus();
   }
 
   async function clearEnteredFields() {
