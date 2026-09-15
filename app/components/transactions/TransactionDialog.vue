@@ -56,7 +56,7 @@
         </v-card-text>
 
         <v-card-actions class="justify-center">
-          <v-btn @click="closeOrAskToDiscard">Schließen</v-btn>
+          <v-btn @click="closeOrAskToDiscard" id="close-dialog-button">Schließen</v-btn>
           <v-btn type="submit" color="primary">Speichern</v-btn>
         </v-card-actions>
       </v-form>
@@ -66,7 +66,9 @@
         </div>
         <v-card-title class="text-center">Eingaben verwerfen?</v-card-title>
         <v-card-actions class="flex-column">
-          <v-btn width="220" variant="tonal" @click="continueEditing"> Weiter bearbeiten </v-btn>
+          <v-btn width="220" variant="tonal" @click="continueEditing" id="continue-editing-button">
+            Weiter bearbeiten
+          </v-btn>
           <v-btn width="220" color="error" variant="flat" @click="discardEnteredFieldsAndClose">
             Verwerfen
           </v-btn>
@@ -175,7 +177,7 @@
   type TransactionDialogMode = 'create' | 'confirmDiscard';
   const dialogMode = ref<TransactionDialogMode>('create');
 
-  function closeOrAskToDiscard() {
+  async function closeOrAskToDiscard() {
     if (
       !hasAnyEnteredValue({
         selectedCategoryType: selectedCategoryType.value,
@@ -190,6 +192,8 @@
       return;
     }
     dialogMode.value = 'confirmDiscard';
+    await nextTick();
+    document.getElementById('continue-editing-button')?.focus();
   }
 
   async function discardEnteredFieldsAndClose() {
@@ -198,8 +202,10 @@
     isOpen.value = false;
   }
 
-  function continueEditing() {
+  async function continueEditing() {
     dialogMode.value = 'create';
+    await nextTick();
+    document.getElementById('close-dialog-button')?.focus();
   }
 
   function goBackOnEscape() {
