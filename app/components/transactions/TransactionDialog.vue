@@ -1,5 +1,11 @@
 <template>
-  <v-dialog v-model="isOpen" :max-width="dialogMode === 'create' ? 800 : 400">
+  <v-dialog
+    v-model="isOpen"
+    :max-width="dialogMode === 'create' ? 800 : 400"
+    persistent
+    no-click-animation
+    @click:outside="closeOrAskToDiscard"
+    @keydown.esc="closeOrAskToDiscard">
     <v-card :title="dialogMode === 'create' ? 'Buchung erfassen' : undefined">
       <v-form ref="transactionForm" @submit.prevent="saveTransaction" v-if="dialogMode === 'create'">
         <v-card-text>
