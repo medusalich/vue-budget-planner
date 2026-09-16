@@ -19,12 +19,15 @@
         v-for="(transaction, index) in transactions"
         :key="transaction.id"
         :class="{ 'border-b-sm': index < transactions.length - 1 }"
-        :transaction="transaction" />
+        :transaction="transaction"
+        @select="emit('select', $event)" />
     </ul>
   </v-sheet>
 </template>
 
 <script setup lang="ts">
+  const emit = defineEmits<{ select: [transactionId: string] }>();
+
   const { transactions, loadTransactions, isLoading } = useTransactions();
   const { loadCategories } = useCategories();
 

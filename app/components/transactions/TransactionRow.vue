@@ -1,6 +1,6 @@
 <template>
   <li class="d-block">
-    <button class="w-100 text-left">
+    <button class="w-100 text-left" @click="emit('select', transaction.id)">
       <v-row tag="span" class="ma-0">
         <v-col tag="span" cols="6" md="2" class="pb-1 pb-md-3">
           {{ formatIsoDateAsGermanDate(transaction.booked_on) }}
@@ -22,6 +22,8 @@
   import type { Transaction } from '~/types';
 
   const props = defineProps<{ transaction: Transaction }>();
+  const emit = defineEmits<{ select: [transactionId: string] }>();
+
   const { findCategoryById } = useCategories();
 
   const category = computed(() => findCategoryById(props.transaction.category_id));

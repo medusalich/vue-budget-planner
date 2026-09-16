@@ -60,7 +60,7 @@
           <v-btn type="submit" color="primary">Speichern</v-btn>
         </v-card-actions>
       </v-form>
-      <template v-else>
+      <template v-else-if="dialogMode === 'confirmDiscard'">
         <div class="text-center pt-6">
           <v-icon icon="mdi-alert-circle-outline" color="error" size="48" />
         </div>
@@ -74,6 +74,19 @@
           </v-btn>
         </v-card-actions>
       </template>
+      <template v-else-if="dialogMode === 'view'">
+        <v-card-title>Buchung</v-card-title>
+        <v-card-text v-if="transactionToShow">
+          <div>Zahlungsdatum: {{ formatIsoDateAsGermanDate(transactionToShow.booked_on) }}</div>
+          <div>Kategorie: {{ findCategoryById(transactionToShow.category_id)?.name }}</div>
+          <div>Notiz: {{ transactionToShow.note }}</div>
+          <div>Betrag: {{ formatCentsAsEuro(transactionToShow.amount_cents) }}</div>
+          <div>Konto: {{ findAccountById(transactionToShow.account_id)?.name }}</div>
+        </v-card-text>
+        <v-card-actions>
+          <v-btn @click="isOpen = false">Schließen</v-btn>
+        </v-card-actions>
+      </template>
       <v-snackbar v-model="isSavedNoticeVisible" attach contained location="center" color="success">
         <v-icon icon="mdi-check-circle" /> Buchung gespeichert
       </v-snackbar>
@@ -85,9 +98,10 @@
   import type { CategoryType } from '~/types';
   import type { SubmitEventPromise } from 'vuetify';
 
+  const props = defineProps<{ transactionId: string | null }>();
   const isOpen = defineModel<boolean>();
   const selectedCategoryType = ref<CategoryType | null>(null);
-  const { selectableCategoriesFor } = useCategories();
+  const { selectableCategoriesFor, findCategoryById } = useCategories();
   const selectedCategoryId = ref<string | null>(null);
 
   const selectableCategories = computed(() => {
@@ -98,6 +112,10 @@
   });
 
   const isCategoryTypeMissing = computed(() => selectedCategoryType.value === null);
+
+  const transactionToShow = computed(() =>
+    props.transactionId ? findTransactionById(props.transactionId) : undefined,
+  );
 
   const enteredAmount = ref('');
 
@@ -121,7 +139,7 @@
     );
   }
 
-  const { loadAccounts, selectableAccounts } = useAccounts();
+  const { loadAccounts, selectableAccounts, findAccountById } = useAccounts();
   const selectedAccountId = ref<string | null>(null);
   onMounted(loadAccounts);
 
@@ -131,7 +149,7 @@
 
   const enteredNote = ref('');
 
-  const { addTransaction } = useTransactions();
+  const { addTransaction, findTransactionById } = useTransactions();
   const transactionForm = useTemplateRef('transactionForm');
 
   async function saveTransaction(event: SubmitEventPromise) {
@@ -174,7 +192,7 @@
 
   const isSavedNoticeVisible = ref(false);
 
-  type TransactionDialogMode = 'create' | 'confirmDiscard';
+  type TransactionDialogMode = 'create' | 'view' | 'confirmDiscard';
   const dialogMode = ref<TransactionDialogMode>('create');
 
   async function closeOrAskToDiscard() {
@@ -215,4 +233,9 @@
     }
     closeOrAskToDiscard();
   }
+
+  watch(isOpen, (nowOpen) => {
+    if (!nowOpen) return;
+    dialogMode.value = props.transactionId ? 'view' : 'create';
+  });
 </script>
