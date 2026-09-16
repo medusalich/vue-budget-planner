@@ -38,6 +38,10 @@ export function useTransactions() {
     }
   }
 
+  function findTransactionById(transactionId: string) {
+    return transactions.value.find((transaction) => transaction.id === transactionId);
+  }
+
   async function removeTransaction(transactionId: string) {
     error.value = null;
 
@@ -83,5 +87,6 @@ export function useTransactions() {
     error,
     addTransaction,
     updateTransaction,
+    findTransactionById,
   };
 }

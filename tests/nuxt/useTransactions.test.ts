@@ -58,6 +58,22 @@ describe('useTransactions', () => {
     });
   });
 
+  describe('findTransactionById', () => {
+    it('finds a transaction by its id', () => {
+      const { findTransactionById } = useTransactions();
+
+      const foundTransaction = findTransactionById('tx-001');
+      expect(foundTransaction?.id).toBe('tx-001');
+    });
+
+    it('finds nothing for an id that belongs to no transaction', () => {
+      const { findTransactionById } = useTransactions();
+
+      const foundTransaction = findTransactionById('no-such-transaction');
+      expect(foundTransaction).toBeUndefined();
+    });
+  });
+
   describe('removeTransaction', () => {
     it('removes the given transaction from the list', async () => {
       const { transactions, removeTransaction } = useTransactions();
