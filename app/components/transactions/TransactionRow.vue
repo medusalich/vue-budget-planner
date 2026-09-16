@@ -31,3 +31,15 @@
       : formatCentsAsEuro(props.transaction.amount_cents),
   );
 </script>
+
+<style scoped>
+  button:hover {
+    background-color: rgb(var(--v-theme-on-surface), var(--v-hover-opacity));
+  }
+
+  button:focus-visible {
+    background-color: rgb(var(--v-theme-on-surface), var(--v-focus-opacity));
+    outline: 2px solid rgb(var(--v-theme-on-surface), var(--v-focus-opacity));
+    outline-offset: -1px;
+  }
+</style>
