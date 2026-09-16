@@ -76,12 +76,21 @@
       </template>
       <template v-else-if="dialogMode === 'view'">
         <v-card-title>Buchung</v-card-title>
-        <v-card-text v-if="transactionToShow">
-          <div>Zahlungsdatum: {{ formatIsoDateAsGermanDate(transactionToShow.booked_on) }}</div>
-          <div>Kategorie: {{ findCategoryById(transactionToShow.category_id)?.name }}</div>
-          <div>Notiz: {{ transactionToShow.note }}</div>
-          <div>Betrag: {{ formatCentsAsEuro(transactionToShow.amount_cents) }}</div>
-          <div>Konto: {{ findAccountById(transactionToShow.account_id)?.name }}</div>
+        <v-card-text v-if="transactionToShow" class="d-flex ga-6 align-start">
+          <dl>
+            <dt class="text-caption text-medium-emphasis">Zahlungsdatum</dt>
+            <dd class="mb-4">{{ formatIsoDateAsGermanDate(transactionToShow.booked_on) }}</dd>
+            <dt class="text-caption text-medium-emphasis">Konto</dt>
+            <dd class="mb-4">{{ findAccountById(transactionToShow.account_id)?.name }}</dd>
+            <dt class="text-caption text-medium-emphasis">Notiz</dt>
+            <dd>{{ transactionToShow.note }}</dd>
+          </dl>
+          <div class="ml-auto text-right bg-surface-light rounded-lg pa-4">
+            <div class="text-h5">{{ formatCentsAsEuro(transactionToShow.amount_cents) }}</div>
+            <div class="text-caption text-medium-emphasis">
+              {{ findCategoryById(transactionToShow.category_id)?.name }}
+            </div>
+          </div>
         </v-card-text>
         <v-card-actions>
           <v-btn @click="isOpen = false">Schließen</v-btn>
