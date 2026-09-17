@@ -1,0 +1,42 @@
+{
+  "permissions": {
+    "deny": [
+      "Edit(CLAUDE.md)",
+      "Edit(README.md)",
+      "Edit(package.json)",
+      "Edit(pnpm-lock.yaml)",
+      "Edit(pnpm-workspace.yaml)",
+      "Edit(nuxt.config.ts)",
+      "Edit(vitest.config.ts)",
+      "Edit(tsconfig.json)",
+      "Edit(eslint.config.mjs)",
+      "Edit(.gitignore)",
+      "Edit(.prettierrc)",
+      "Edit(app/**)",
+      "Edit(tests/**)",
+      "Edit(public/**)",
+      "Edit(.claude/**)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git merge *)",
+      "Bash(git rebase *)",
+      "Bash(git revert *)",
+      "Bash(git cherry-pick *)",
+      "Bash(git reset *)",
+      "Bash(git restore *)",
+      "Bash(git checkout *)",
+      "Bash(git switch *)",
+      "Bash(git branch *)",
+      "Bash(git tag *)",
+      "Bash(git stash *)",
+      "Bash(git rm *)",
+      "Bash(git mv *)",
+      "Bash(git clean *)",
+      "Bash(git apply *)",
+      "Bash(git push *)",
+      "Bash(git pull *)",
+      "Bash(git fetch *)",
+      "Bash(git config *)"
+    ]
+  }
+}
