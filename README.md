@@ -1,6 +1,6 @@
 # Budget Planner
 
-Ein Haushaltsbuch: Einnahmen und Ausgaben erfassen, nach Kategorien auswerten.
-Gebaut mit Nuxt 4, Vuetify 3 und Supabase.
+A household ledger: record income and expenses, review them by category.
+Built with Nuxt 4, Vuetify 3 and Supabase.
 
-**Status:** in Entwicklung
+**Status:** in development
