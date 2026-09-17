@@ -2,7 +2,7 @@
   "permissions": {
     "deny": [
       "Edit(CLAUDE.md)",
-      "Edit(README.md)",
+      "Edit(/README.md)",
       "Edit(package.json)",
       "Edit(pnpm-lock.yaml)",
       "Edit(pnpm-workspace.yaml)",
