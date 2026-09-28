@@ -78,7 +78,7 @@ A comment explains the why, not the what. What the name already carries needs no
 
 ## What lands in the repository
 
-Comments, commit messages and the README address someone who knows neither the project n
+Comments, commit messages and the README address someone who knows neither the project nor its
 history. They assume nothing that lives outside the repository and point only at things that can
 be found inside it.
 
@@ -94,5 +94,5 @@ one gets `superseded by` with its number.
 ## Decisions can be revised
 
 What is written here or in `docs/decisions/` was the best choice at the time, together with its
-reasoning. When something better turns up, it changes. Only what `.claude/settings.json`
-is final.
+reasoning. When something better turns up, it changes. Only what stands in
+`.claude/settings.json` is final.
