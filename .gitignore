@@ -6,5 +6,5 @@ dist
 *.log
 .DS_Store
 .env
-docs/
+notes/
 .nuxtrc
