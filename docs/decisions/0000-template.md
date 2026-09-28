@@ -23,3 +23,6 @@ not "we will store amounts as …".
 
 What this makes easy, what it makes harder, and which price is accepted knowingly.
 Both directions belong here: a record listing only advantages is one that was not thought through.
+
+A fact that only turns up later may be added here with its date. The decision itself stays as it
+was written.
