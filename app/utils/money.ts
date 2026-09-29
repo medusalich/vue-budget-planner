@@ -32,3 +32,8 @@ export function formatCentsAsEuro(cents: number): string {
 export function formatCentsAsSignedEuro(cents: number, categoryType: CategoryType): string {
   return formatCentsAsEuro(categoryType === 'expense' ? -cents : cents);
 }
+
+/** Output is read back by parseAmountToCents - so no thousands separator and no currency sign. */
+export function formatCentsForAmountInput(cents: number): string {
+  return (cents / 100).toFixed(2).replace('.', ',');
+}

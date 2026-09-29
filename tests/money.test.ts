@@ -1,5 +1,10 @@
 import { describe, it, expect } from 'vitest';
-import { formatCentsAsEuro, parseAmountToCents, formatCentsAsSignedEuro } from '../app/utils/money';
+import {
+  formatCentsAsEuro,
+  parseAmountToCents,
+  formatCentsAsSignedEuro,
+  formatCentsForAmountInput,
+} from '../app/utils/money';
 
 describe('parseAmountToCents', () => {
   it('parses a comma as decimal separator', () => {
@@ -56,5 +61,15 @@ describe('formatCentsAsSignedEuro', () => {
 
   it('shows no sign before the income amount', () => {
     expect(formatCentsAsSignedEuro(1250, 'income')).toBe('12,50\u00A0€');
+  });
+});
+
+describe('formatCentsForAmountInput', () => {
+  it('writes cents as euros with a comma', () => {
+    expect(formatCentsForAmountInput(1250)).toBe('12,50');
+  });
+
+  it('writes an amount that parseAmountToCents reads back unchanged', () => {
+    expect(parseAmountToCents(formatCentsForAmountInput(241550))).toBe(241550);
   });
 });
