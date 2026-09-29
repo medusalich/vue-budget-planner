@@ -7,7 +7,10 @@
     @click:outside="closeOrAskToDiscard"
     @keydown.esc="goBackOnEscape">
     <v-card :title="dialogMode === 'create' ? 'Buchung erfassen' : undefined">
-      <v-form ref="transactionForm" @submit.prevent="saveTransaction" v-if="dialogMode === 'create'">
+      <v-form
+        ref="transactionForm"
+        @submit.prevent="saveTransaction"
+        v-if="dialogMode === 'create' || dialogMode === 'edit'">
         <v-card-text>
           <v-radio-group
             v-model="selectedCategoryType"
@@ -99,6 +102,10 @@
         </v-card-text>
         <v-card-actions>
           <v-btn @click="isOpen = false">Schließen</v-btn>
+          <v-spacer />
+          <v-btn v-if="canEditTransactionToShow" color="primary" @click="startEditingTransaction">
+            Bearbeiten
+          </v-btn>
         </v-card-actions>
       </template>
       <v-snackbar v-model="isSavedNoticeVisible" attach contained location="center" color="success">
@@ -166,7 +173,7 @@
 
   const enteredNote = ref('');
 
-  const { addTransaction, findTransactionById } = useTransactions();
+  const { addTransaction, findTransactionById, updateTransaction } = useTransactions();
   const transactionForm = useTemplateRef('transactionForm');
 
   async function saveTransaction(event: SubmitEventPromise) {
@@ -180,15 +187,19 @@
       return;
     }
 
-    await addTransaction(
-      buildNewTransaction({
-        amountCents,
-        bookedOn: enteredBookedOn.value,
-        categoryId: selectedCategoryId.value,
-        accountId: selectedAccountId.value,
-        note: enteredNote.value,
-      }),
-    );
+    const enteredTransaction = buildNewTransaction({
+      amountCents,
+      bookedOn: enteredBookedOn.value,
+      categoryId: selectedCategoryId.value,
+      accountId: selectedAccountId.value,
+      note: enteredNote.value,
+    });
+
+    if (dialogMode.value === 'edit' && props.transactionId) {
+      await updateTransaction(props.transactionId, enteredTransaction);
+    } else {
+      await addTransaction(enteredTransaction);
+    }
 
     await clearEnteredFields();
     isSavedNoticeVisible.value = true;
@@ -209,7 +220,7 @@
 
   const isSavedNoticeVisible = ref(false);
 
-  type TransactionDialogMode = 'create' | 'view' | 'confirmDiscard';
+  type TransactionDialogMode = 'create' | 'view' | 'confirmDiscard' | 'edit';
   const dialogMode = ref<TransactionDialogMode>('create');
 
   async function closeOrAskToDiscard() {
@@ -243,6 +254,19 @@
     document.getElementById('close-dialog-button')?.focus();
   }
 
+  function startEditingTransaction() {
+    if (transactionToShow.value === undefined) {
+      return;
+    }
+    selectedCategoryType.value = findCategoryById(transactionToShow.value.category_id)?.type || null;
+    selectedCategoryId.value = transactionToShow.value.category_id;
+    enteredAmount.value = formatCentsForAmountInput(transactionToShow.value.amount_cents);
+    enteredBookedOn.value = transactionToShow.value.booked_on;
+    selectedAccountId.value = transactionToShow.value.account_id;
+    enteredNote.value = transactionToShow.value.note || '';
+    dialogMode.value = 'edit';
+  }
+
   function goBackOnEscape() {
     if (dialogMode.value === 'confirmDiscard') {
       continueEditing();
@@ -254,5 +278,14 @@
   watch(isOpen, (nowOpen) => {
     if (!nowOpen) return;
     dialogMode.value = props.transactionId ? 'view' : 'create';
+  });
+
+  const { signedInMemberId } = useSignedInMember();
+
+  const canEditTransactionToShow = computed(() => {
+    if (transactionToShow.value === undefined) {
+      return false;
+    }
+    return mayBeEditedBy(transactionToShow.value, signedInMemberId.value);
   });
 </script>
