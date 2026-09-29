@@ -75,7 +75,12 @@
         </v-card-actions>
       </template>
       <template v-else-if="dialogMode === 'view'">
-        <v-card-title>Buchung</v-card-title>
+        <v-card-title class="d-flex align-baseline">
+          Buchung
+          <span v-if="transactionToShow" class="ml-auto text-caption text-medium-emphasis">
+            erfasst von {{ findProfileById(transactionToShow.created_by)?.display_name }}
+          </span>
+        </v-card-title>
         <v-card-text v-if="transactionToShow" class="d-flex ga-6 align-start">
           <dl>
             <dt class="text-caption text-medium-emphasis">Zahlungsdatum</dt>
@@ -151,6 +156,9 @@
   const { loadAccounts, selectableAccounts, findAccountById } = useAccounts();
   const selectedAccountId = ref<string | null>(null);
   onMounted(loadAccounts);
+
+  const { loadProfiles, findProfileById } = useProfiles();
+  onMounted(loadProfiles);
 
   function requireSelection(message: string) {
     return (value: string | null) => value !== null || message;
