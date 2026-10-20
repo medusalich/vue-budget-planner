@@ -197,6 +197,9 @@
 
     if (dialogMode.value === 'edit' && props.transactionId) {
       await updateTransaction(props.transactionId, enteredTransaction);
+      await clearEnteredFields();
+      dialogMode.value = 'view';
+      return;
     } else {
       await addTransaction(enteredTransaction);
     }
