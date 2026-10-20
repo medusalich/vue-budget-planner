@@ -1,12 +1,12 @@
 <template>
   <v-dialog
     v-model="isOpen"
-    :max-width="dialogMode === 'create' ? 800 : 400"
+    :max-width="dialogMode === 'create' || dialogMode === 'edit' ? 800 : 400"
     persistent
     no-click-animation
     @click:outside="goBackOneStep"
     @keydown.esc="goBackOneStep">
-    <v-card :title="dialogMode === 'create' ? 'Buchung erfassen' : undefined">
+    <v-card :title="dialogTitle">
       <v-form
         ref="transactionForm"
         @submit.prevent="saveTransaction"
@@ -298,5 +298,15 @@
       return false;
     }
     return mayBeEditedBy(transactionToShow.value, signedInMemberId.value);
+  });
+
+  const dialogTitle = computed(() => {
+    if (dialogMode.value === 'create') {
+      return 'Buchung erfassen';
+    }
+    if (dialogMode.value === 'edit') {
+      return 'Buchung bearbeiten';
+    }
+    return undefined;
   });
 </script>
