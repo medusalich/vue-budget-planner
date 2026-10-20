@@ -101,7 +101,7 @@
           </div>
         </v-card-text>
         <v-card-actions>
-          <v-btn @click="isOpen = false">Schließen</v-btn>
+          <v-btn @click="isOpen = false" id="close-view-button">Schließen</v-btn>
           <v-spacer />
           <v-btn v-if="canEditTransactionToShow" color="primary" @click="startEditingTransaction">
             Bearbeiten
@@ -208,6 +208,8 @@
       await updateTransaction(props.transactionId, enteredTransaction);
       await clearEnteredFields();
       dialogMode.value = 'view';
+      await nextTick();
+      document.getElementById('close-view-button')?.focus();
       return;
     } else {
       await addTransaction(enteredTransaction);
