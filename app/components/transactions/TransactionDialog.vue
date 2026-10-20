@@ -138,6 +138,15 @@
     props.transactionId ? findTransactionById(props.transactionId) : undefined,
   );
 
+  const { signedInMemberId } = useSignedInMember();
+
+  const canEditTransactionToShow = computed(() => {
+    if (transactionToShow.value === undefined) {
+      return false;
+    }
+    return mayBeEditedBy(transactionToShow.value, signedInMemberId.value);
+  });
+
   const enteredAmount = ref('');
 
   function validateEnteredAmount(value: string) {
@@ -268,12 +277,12 @@
     if (transactionToShow.value === undefined) {
       return;
     }
-    selectedCategoryType.value = findCategoryById(transactionToShow.value.category_id)?.type || null;
+    selectedCategoryType.value = findCategoryById(transactionToShow.value.category_id)?.type ?? null;
     selectedCategoryId.value = transactionToShow.value.category_id;
     enteredAmount.value = formatCentsForAmountInput(transactionToShow.value.amount_cents);
     enteredBookedOn.value = transactionToShow.value.booked_on;
     selectedAccountId.value = transactionToShow.value.account_id;
-    enteredNote.value = transactionToShow.value.note || '';
+    enteredNote.value = transactionToShow.value.note ?? '';
     transactionFormAtEditStart.value = { ...currentTransactionForm.value };
     dialogMode.value = 'edit';
   }
@@ -289,15 +298,6 @@
   watch(isOpen, (nowOpen) => {
     if (!nowOpen) return;
     dialogMode.value = props.transactionId ? 'view' : 'create';
-  });
-
-  const { signedInMemberId } = useSignedInMember();
-
-  const canEditTransactionToShow = computed(() => {
-    if (transactionToShow.value === undefined) {
-      return false;
-    }
-    return mayBeEditedBy(transactionToShow.value, signedInMemberId.value);
   });
 
   const dialogTitle = computed(() => {
