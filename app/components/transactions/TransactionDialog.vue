@@ -4,8 +4,8 @@
     :max-width="dialogMode === 'create' ? 800 : 400"
     persistent
     no-click-animation
-    @click:outside="closeOrAskToDiscard"
-    @keydown.esc="goBackOnEscape">
+    @click:outside="goBackOneStep"
+    @keydown.esc="goBackOneStep">
     <v-card :title="dialogMode === 'create' ? 'Buchung erfassen' : undefined">
       <v-form
         ref="transactionForm"
@@ -278,7 +278,7 @@
     dialogMode.value = 'edit';
   }
 
-  function goBackOnEscape() {
+  function goBackOneStep() {
     if (dialogMode.value === 'confirmDiscard') {
       continueEditing();
       return;
