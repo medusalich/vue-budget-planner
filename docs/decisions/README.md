@@ -75,6 +75,13 @@ is in [0000-template.md](0000-template.md).
 - [0039](0039-view-filters-wait.md) — View filters wait
 - [0040](0040-the-special-states-come-from-the-framework.md) — The special states come from the framework
 
+### The transaction dialog
+
+- [0041](0041-someone-elses-transaction-shows-no-edit-button.md) — Someone else's transaction shows no edit button
+- [0042](0042-saving-an-edit-returns-to-the-transaction.md) — Saving an edit returns to the transaction
+- [0043](0043-the-discard-question-compares-entered-text.md) — The discard question compares entered text
+- [0044](0044-escape-and-a-click-outside-go-back-one-step.md) — Escape and a click outside go back one step
+
 ## In order
 
 | #    | Date       | Status   | Decision                                                                                                                             |
@@ -119,3 +126,7 @@ is in [0000-template.md](0000-template.md).
 | 0038 | 2026-09-14 | accepted | [The list has one appearance](0038-the-list-has-one-appearance.md)                                                                   |
 | 0039 | 2026-09-14 | accepted | [View filters wait](0039-view-filters-wait.md)                                                                                       |
 | 0040 | 2026-09-14 | accepted | [The special states come from the framework](0040-the-special-states-come-from-the-framework.md)                                     |
+| 0041 | 2026-09-29 | accepted | [Someone else's transaction shows no edit button](0041-someone-elses-transaction-shows-no-edit-button.md)                            |
+| 0042 | 2026-10-20 | accepted | [Saving an edit returns to the transaction](0042-saving-an-edit-returns-to-the-transaction.md)                                       |
+| 0043 | 2026-10-20 | accepted | [The discard question compares entered text](0043-the-discard-question-compares-entered-text.md)                                     |
+| 0044 | 2026-10-20 | accepted | [Escape and a click outside go back one step](0044-escape-and-a-click-outside-go-back-one-step.md)                                   |
