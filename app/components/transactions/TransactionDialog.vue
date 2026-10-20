@@ -225,6 +225,7 @@
 
   type TransactionDialogMode = 'create' | 'view' | 'confirmDiscard' | 'edit';
   const dialogMode = ref<TransactionDialogMode>('create');
+  const dialogModeBeforeConfirmDiscard = ref<TransactionDialogMode>('create');
 
   async function closeOrAskToDiscard() {
     if (
@@ -240,6 +241,7 @@
       isOpen.value = false;
       return;
     }
+    dialogModeBeforeConfirmDiscard.value = dialogMode.value;
     dialogMode.value = 'confirmDiscard';
     await nextTick();
     document.getElementById('continue-editing-button')?.focus();
@@ -252,7 +254,7 @@
   }
 
   async function continueEditing() {
-    dialogMode.value = 'create';
+    dialogMode.value = dialogModeBeforeConfirmDiscard.value;
     await nextTick();
     document.getElementById('close-dialog-button')?.focus();
   }
