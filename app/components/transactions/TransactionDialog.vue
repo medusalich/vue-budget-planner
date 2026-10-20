@@ -226,18 +226,23 @@
   type TransactionDialogMode = 'create' | 'view' | 'confirmDiscard' | 'edit';
   const dialogMode = ref<TransactionDialogMode>('create');
   const dialogModeBeforeConfirmDiscard = ref<TransactionDialogMode>('create');
+  const currentTransactionForm = computed<TransactionForm>(() => ({
+    selectedCategoryType: selectedCategoryType.value,
+    selectedCategoryId: selectedCategoryId.value,
+    enteredAmount: enteredAmount.value,
+    enteredBookedOn: enteredBookedOn.value,
+    selectedAccountId: selectedAccountId.value,
+    enteredNote: enteredNote.value,
+  }));
+  const transactionFormAtEditStart = ref<TransactionForm | null>(null);
 
   async function closeOrAskToDiscard() {
-    if (
-      !hasAnyEnteredValue({
-        selectedCategoryType: selectedCategoryType.value,
-        selectedCategoryId: selectedCategoryId.value,
-        enteredAmount: enteredAmount.value,
-        enteredBookedOn: enteredBookedOn.value,
-        selectedAccountId: selectedAccountId.value,
-        enteredNote: enteredNote.value,
-      })
-    ) {
+    const hasInputToLose =
+      dialogMode.value === 'edit' && transactionFormAtEditStart.value !== null
+        ? hasTransactionFormChanged(transactionFormAtEditStart.value, currentTransactionForm.value)
+        : hasAnyEnteredValue(currentTransactionForm.value);
+    if (!hasInputToLose) {
+      await clearEnteredFields();
       isOpen.value = false;
       return;
     }
@@ -269,6 +274,7 @@
     enteredBookedOn.value = transactionToShow.value.booked_on;
     selectedAccountId.value = transactionToShow.value.account_id;
     enteredNote.value = transactionToShow.value.note || '';
+    transactionFormAtEditStart.value = { ...currentTransactionForm.value };
     dialogMode.value = 'edit';
   }
 
