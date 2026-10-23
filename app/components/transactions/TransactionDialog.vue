@@ -9,24 +9,24 @@
     <v-card :title="dialogTitle">
       <template v-if="dialogMode === 'edit'" #append>
         <IconButton
+          id="delete-transaction-button"
           icon="mdi-delete-outline"
           color="error"
           label="Buchung löschen"
-          id="delete-transaction-button"
           @click="askToDeleteTransaction" />
       </template>
       <v-form
+        v-if="dialogMode === 'create' || dialogMode === 'edit'"
         ref="transactionForm"
-        @submit.prevent="saveTransaction"
-        v-if="dialogMode === 'create' || dialogMode === 'edit'">
+        @submit.prevent="saveTransaction">
         <v-card-text>
           <v-radio-group
             v-model="selectedCategoryType"
             inline
             label="Art der Buchung"
-            @update:model-value="selectedCategoryId = null"
-            :rules="[requireSelection('Art der Buchung wählen')]">
-            <v-radio label="Einnahme" value="income" id="category-type-income" />
+            :rules="[requireSelection('Art der Buchung wählen')]"
+            @update:model-value="selectedCategoryId = null">
+            <v-radio id="category-type-income" label="Einnahme" value="income" />
             <v-radio label="Ausgabe" value="expense" />
           </v-radio-group>
 
@@ -67,7 +67,7 @@
         </v-card-text>
 
         <v-card-actions class="justify-center">
-          <v-btn @click="closeOrAskToDiscard" id="close-dialog-button">Schließen</v-btn>
+          <v-btn id="close-dialog-button" @click="closeOrAskToDiscard">Schließen</v-btn>
           <v-btn type="submit" color="primary">Speichern</v-btn>
         </v-card-actions>
       </v-form>
@@ -77,7 +77,7 @@
         </div>
         <v-card-title class="text-center">Eingaben verwerfen?</v-card-title>
         <v-card-actions class="flex-column">
-          <v-btn width="220" variant="tonal" @click="continueEditing" id="continue-editing-button">
+          <v-btn id="continue-editing-button" width="220" variant="tonal" @click="continueEditing">
             Weiter bearbeiten
           </v-btn>
           <v-btn width="220" color="error" variant="flat" @click="discardEnteredFieldsAndClose">
@@ -106,7 +106,7 @@
           </p>
         </v-card-text>
         <v-card-actions class="flex-column">
-          <v-btn width="220" variant="tonal" @click="keepTransaction" id="keep-transaction-button">
+          <v-btn id="keep-transaction-button" width="220" variant="tonal" @click="keepTransaction">
             Behalten
           </v-btn>
           <v-btn width="220" color="error" variant="flat" @click="deleteTransactionAndClose">
@@ -138,7 +138,7 @@
           </div>
         </v-card-text>
         <v-card-actions>
-          <v-btn @click="isOpen = false" id="close-view-button">Schließen</v-btn>
+          <v-btn id="close-view-button" @click="isOpen = false">Schließen</v-btn>
           <v-spacer />
           <v-btn v-if="canEditTransactionToShow" color="primary" @click="startEditingTransaction">
             Bearbeiten

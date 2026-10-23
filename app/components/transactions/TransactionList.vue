@@ -5,8 +5,7 @@
     v-else-if="transactions.length === 0"
     title="Leer wie ein Portemonnaie am letzten Tag des Monats."
     text="Noch nichts erfasst. Trag die erste Buchung ein,
-    dann füllt sich wenigstens die Liste.">
-  </v-empty-state>
+    dann füllt sich wenigstens die Liste."/>
   <v-sheet v-else max-width="800" class="border-sm">
     <v-row class="d-none d-md-flex border-b-sm ma-0" aria-hidden="true">
       <v-col md="2">Datum</v-col>
