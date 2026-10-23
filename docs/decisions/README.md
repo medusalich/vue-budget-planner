@@ -65,6 +65,7 @@ is in [0000-template.md](0000-template.md).
 - [0030](0030-four-device-sizes-not-mobile-first.md) — Four device sizes, not mobile-first
 - [0031](0031-accessibility-targets-wcag-2-2-level-aa.md) — Accessibility targets WCAG 2.2 Level AA
 - [0032](0032-appearance-comes-from-props.md) — Appearance comes from props
+- [0050](0050-label-contrast-is-raised-through-the-theme.md) — Label contrast is raised through the theme
 
 ### The transaction list
 
@@ -74,6 +75,7 @@ is in [0000-template.md](0000-template.md).
 - [0038](0038-the-list-has-one-appearance.md) — The list has one appearance
 - [0039](0039-view-filters-wait.md) — View filters wait
 - [0040](0040-the-special-states-come-from-the-framework.md) — The special states come from the framework
+- [0049](0049-the-loading-state-is-announced-as-text.md) — The loading state is announced as text
 
 ### The transaction dialog
 
@@ -84,6 +86,7 @@ is in [0000-template.md](0000-template.md).
 - [0045](0045-deleting-starts-from-the-edit-state.md) — Deleting starts from the edit state
 - [0046](0046-an-icon-only-button-is-a-native-button.md) — An icon-only button is a native button
 - [0047](0047-after-a-delete-the-focus-moves-to-the-new-entry-button.md) — After a delete the focus moves to the new-entry button
+- [0048](0048-enter-in-a-field-saves-the-form.md) — Enter in a field saves the form
 
 ## In order
 
@@ -136,3 +139,6 @@ is in [0000-template.md](0000-template.md).
 | 0045 | 2026-10-23 | accepted | [Deleting starts from the edit state](0045-deleting-starts-from-the-edit-state.md)                                                   |
 | 0046 | 2026-10-23 | accepted | [An icon-only button is a native button](0046-an-icon-only-button-is-a-native-button.md)                                             |
 | 0047 | 2026-10-23 | accepted | [After a delete the focus moves to the new-entry button](0047-after-a-delete-the-focus-moves-to-the-new-entry-button.md)             |
+| 0048 | 2026-10-23 | accepted | [Enter in a field saves the form](0048-enter-in-a-field-saves-the-form.md)                                                           |
+| 0049 | 2026-10-23 | accepted | [The loading state is announced as text](0049-the-loading-state-is-announced-as-text.md)                                             |
+| 0050 | 2026-10-23 | accepted | [Label contrast is raised through the theme](0050-label-contrast-is-raised-through-the-theme.md)                                     |
