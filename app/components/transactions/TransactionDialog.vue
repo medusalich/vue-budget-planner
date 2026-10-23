@@ -90,6 +90,21 @@
           <v-icon icon="mdi-alert-circle-outline" color="error" size="48" />
         </div>
         <v-card-title class="text-center">Buchung löschen?</v-card-title>
+        <v-card-text v-if="transactionToShow">
+          <div
+            class="d-flex justify-space-between ga-4 bg-surface-light rounded-lg pa-4 w-sm-75 mx-auto">
+            <div>
+              <p>{{ formatIsoDateAsGermanDate(transactionToShow.booked_on) }}</p>
+              <p class="text-caption text-medium-emphasis">
+                {{ findCategoryById(transactionToShow.category_id)?.name }}
+              </p>
+            </div>
+            <p class="text-h6 text-no-wrap">{{ formatCentsAsEuro(transactionToShow.amount_cents) }}</p>
+          </div>
+          <p class="text-caption text-medium-emphasis text-center mt-4">
+            Das lässt sich nicht rückgängig machen.
+          </p>
+        </v-card-text>
         <v-card-actions class="flex-column">
           <v-btn width="220" variant="tonal" @click="keepTransaction" id="keep-transaction-button">
             Behalten
