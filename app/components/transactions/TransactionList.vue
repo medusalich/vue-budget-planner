@@ -1,11 +1,14 @@
 <template>
   <h2>Buchungen</h2>
-  <p v-if="isLoading">Buchungen werden geladen</p>
+  <div v-if="isLoading" role="status" class="text-center py-12">
+    <v-progress-circular indeterminate aria-hidden="true" />
+    <p class="mt-3">Buchungen werden geladen</p>
+  </div>
   <v-empty-state
     v-else-if="transactions.length === 0"
     title="Leer wie ein Portemonnaie am letzten Tag des Monats."
     text="Noch nichts erfasst. Trag die erste Buchung ein,
-    dann füllt sich wenigstens die Liste."/>
+    dann füllt sich wenigstens die Liste." />
   <v-sheet v-else max-width="800" class="border-sm">
     <v-row class="d-none d-md-flex border-b-sm ma-0" aria-hidden="true">
       <v-col md="2">Datum</v-col>
