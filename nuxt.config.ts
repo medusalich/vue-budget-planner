@@ -35,6 +35,15 @@ export default defineNuxtConfig({
         VSnackbar: { rounded: 'lg' },
         VSheet: { rounded: 'lg' },
       },
+      theme: {
+        themes: {
+          light: {
+            variables: {
+              'medium-emphasis-opacity': 0.7,
+            },
+          },
+        },
+      },
     },
   },
 });
