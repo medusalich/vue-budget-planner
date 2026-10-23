@@ -7,6 +7,14 @@
     @click:outside="goBackOneStep"
     @keydown.esc="goBackOneStep">
     <v-card :title="dialogTitle">
+      <template v-if="dialogMode === 'edit'" #append>
+        <IconButton
+          icon="mdi-delete-outline"
+          color="error"
+          label="Buchung löschen"
+          id="delete-transaction-button"
+          @click="askToDeleteTransaction" />
+      </template>
       <v-form
         ref="transactionForm"
         @submit.prevent="saveTransaction"
@@ -77,6 +85,20 @@
           </v-btn>
         </v-card-actions>
       </template>
+      <template v-else-if="dialogMode === 'confirmDelete'">
+        <div class="text-center pt-6">
+          <v-icon icon="mdi-alert-circle-outline" color="error" size="48" />
+        </div>
+        <v-card-title class="text-center">Buchung löschen?</v-card-title>
+        <v-card-actions class="flex-column">
+          <v-btn width="220" variant="tonal" @click="keepTransaction" id="keep-transaction-button">
+            Behalten
+          </v-btn>
+          <v-btn width="220" color="error" variant="flat" @click="deleteTransactionAndClose">
+            Löschen
+          </v-btn>
+        </v-card-actions>
+      </template>
       <template v-else-if="dialogMode === 'view'">
         <v-card-title class="d-flex align-baseline">
           Buchung
@@ -120,6 +142,7 @@
   import type { SubmitEventPromise } from 'vuetify';
 
   const props = defineProps<{ transactionId: string | null }>();
+  const emit = defineEmits<{ deleted: [] }>();
   const isOpen = defineModel<boolean>();
   const selectedCategoryType = ref<CategoryType | null>(null);
   const { selectableCategoriesFor, findCategoryById } = useCategories();
@@ -182,7 +205,8 @@
 
   const enteredNote = ref('');
 
-  const { addTransaction, findTransactionById, updateTransaction } = useTransactions();
+  const { addTransaction, findTransactionById, removeTransaction, updateTransaction } =
+    useTransactions();
   const transactionForm = useTemplateRef('transactionForm');
 
   async function saveTransaction(event: SubmitEventPromise) {
@@ -234,7 +258,7 @@
 
   const isSavedNoticeVisible = ref(false);
 
-  type TransactionDialogMode = 'create' | 'view' | 'confirmDiscard' | 'edit';
+  type TransactionDialogMode = 'create' | 'view' | 'confirmDiscard' | 'edit' | 'confirmDelete';
   const dialogMode = ref<TransactionDialogMode>('create');
   const dialogModeBeforeConfirmDiscard = ref<TransactionDialogMode>('create');
   const currentTransactionForm = computed<TransactionForm>(() => ({
@@ -289,9 +313,35 @@
     dialogMode.value = 'edit';
   }
 
+  async function askToDeleteTransaction() {
+    dialogMode.value = 'confirmDelete';
+    await nextTick();
+    document.getElementById('keep-transaction-button')?.focus();
+  }
+
+  async function keepTransaction() {
+    dialogMode.value = 'edit';
+    await nextTick();
+    document.getElementById('delete-transaction-button')?.focus();
+  }
+
+  async function deleteTransactionAndClose() {
+    if (!props.transactionId) {
+      return;
+    }
+    await removeTransaction(props.transactionId);
+    await clearEnteredFields();
+    isOpen.value = false;
+    emit('deleted');
+  }
+
   function goBackOneStep() {
     if (dialogMode.value === 'confirmDiscard') {
       continueEditing();
+      return;
+    }
+    if (dialogMode.value === 'confirmDelete') {
+      keepTransaction();
       return;
     }
     closeOrAskToDiscard();

@@ -1,10 +1,17 @@
 <template>
   <v-container>
     <h1 class="text-h4 mb-4">Haushaltsbuch</h1>
-    <v-btn color="primary" prepend-icon="mdi-plus" @click="startNewTransaction">
+    <v-btn
+      id="new-transaction-button"
+      color="primary"
+      prepend-icon="mdi-plus"
+      @click="startNewTransaction">
       Buchung erfassen
     </v-btn>
-    <TransactionDialog v-model="isTransactionDialogOpen" :transaction-id="selectedTransactionId" />
+    <TransactionDialog
+      v-model="isTransactionDialogOpen"
+      :transaction-id="selectedTransactionId"
+      @deleted="focusNewTransactionButton" />
     <TransactionList @select="showTransaction($event)" />
   </v-container>
 </template>
@@ -21,5 +28,9 @@
   function startNewTransaction() {
     selectedTransactionId.value = null;
     isTransactionDialogOpen.value = true;
+  }
+
+  function focusNewTransactionButton() {
+    document.getElementById('new-transaction-button')?.focus();
   }
 </script>
