@@ -2,6 +2,7 @@
   <v-dialog
     v-model="isOpen"
     :max-width="dialogMode === 'create' || dialogMode === 'edit' ? 800 : 400"
+    :aria-label="dialogLabel"
     persistent
     no-click-animation
     @click:outside="goBackOneStep"
@@ -375,5 +376,18 @@
       return 'Buchung bearbeiten';
     }
     return undefined;
+  });
+
+  const dialogLabel = computed(() => {
+    if (dialogMode.value === 'view') {
+      return 'Buchung';
+    }
+    if (dialogMode.value === 'confirmDiscard') {
+      return 'Eingaben verwerfen?';
+    }
+    if (dialogMode.value === 'confirmDelete') {
+      return 'Buchung löschen?';
+    }
+    return dialogTitle.value;
   });
 </script>
