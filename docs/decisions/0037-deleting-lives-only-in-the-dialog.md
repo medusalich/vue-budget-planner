@@ -1,6 +1,6 @@
 # 0037 — Deleting lives only in the dialog
 
-**Status:** proposed
+**Status:** accepted
 **Date:** 2026-09-14
 
 ## Context
