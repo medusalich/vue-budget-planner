@@ -35,3 +35,29 @@ export function getNextMonth(month: string): string {
 
   return `${year}-${String(monthNumber + 1).padStart(2, '0')}`;
 }
+
+/**
+ * Writes a `YYYY-MM` month as German text, e.g. `'2026-07'` as `'Juli 2026'`.
+ * Uses a fixed list of names instead of `Intl`, so no `Date` and no time zone are involved.
+ */
+const GERMAN_MONTH_NAMES = [
+  'Januar',
+  'Februar',
+  'März',
+  'April',
+  'Mai',
+  'Juni',
+  'Juli',
+  'August',
+  'September',
+  'Oktober',
+  'November',
+  'Dezember',
+];
+
+export function formatIsoMonthAsGermanMonth(month: string): string {
+  const year = month.slice(0, 4);
+  const monthNumber = Number(month.slice(5, 7));
+
+  return `${GERMAN_MONTH_NAMES[monthNumber - 1]} ${year}`;
+}
