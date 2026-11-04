@@ -40,12 +40,12 @@ describe('formatIsoMonthAsGermanMonth', () => {
   it('writes the month name and year', () => {
     expect(formatIsoMonthAsGermanMonth('2026-11')).toBe('November 2026');
   });
-});
 
-it.each([
-  { month: '2026-01', expected: 'Januar 2026' },
-  { month: '2026-07', expected: 'Juli 2026' },
-  { month: '2026-12', expected: 'Dezember 2026' },
-])('writes $month as $expected', ({ month, expected }) => {
-  expect(formatIsoMonthAsGermanMonth(month)).toBe(expected);
+  it.each([
+    { month: '2026-01', expected: 'Januar 2026' },
+    { month: '2026-07', expected: 'Juli 2026' },
+    { month: '2026-12', expected: 'Dezember 2026' },
+  ])('writes $month as $expected', ({ month, expected }) => {
+    expect(formatIsoMonthAsGermanMonth(month)).toBe(expected);
+  });
 });
