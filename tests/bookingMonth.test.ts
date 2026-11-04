@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { isBookedInMonth, getPreviousMonth } from '../app/utils/bookingMonth';
+import { isBookedInMonth, getPreviousMonth, getNextMonth } from '../app/utils/bookingMonth';
 
 describe('isBookedInMonth', () => {
   it.each(['2026-11-01', '2026-11-30'])('counts %s as part of November 2026', (bookedOn) => {
@@ -18,5 +18,15 @@ describe('getPreviousMonth', () => {
 
   it('goes back from January to December of the previous year', () => {
     expect(getPreviousMonth('2026-01')).toBe('2025-12');
+  });
+});
+
+describe('getNextMonth', () => {
+  it('goes forward one month within the same year', () => {
+    expect(getNextMonth('2026-10')).toBe('2026-11');
+  });
+
+  it('goes forward from December to January of the next year', () => {
+    expect(getNextMonth('2026-12')).toBe('2027-01');
   });
 });

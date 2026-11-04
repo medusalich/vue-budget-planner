@@ -20,3 +20,18 @@ export function getPreviousMonth(month: string): string {
 
   return `${year}-${String(monthNumber - 1).padStart(2, '0')}`;
 }
+
+/**
+ * Returns the month after the given one; from December it goes on to January of the
+ * next year. Expects and returns `YYYY-MM`, zero-padded.
+ */
+export function getNextMonth(month: string): string {
+  const year = Number(month.slice(0, 4));
+  const monthNumber = Number(month.slice(5, 7));
+
+  if (monthNumber === 12) {
+    return `${year + 1}-01`;
+  }
+
+  return `${year}-${String(monthNumber + 1).padStart(2, '0')}`;
+}
