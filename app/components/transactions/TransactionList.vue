@@ -28,11 +28,9 @@
 </template>
 
 <script setup lang="ts">
+  import type { Transaction } from '~/types';
+
+  defineProps<{ transactions: Transaction[]; isLoading: boolean }>();
+
   const emit = defineEmits<{ select: [transactionId: string] }>();
-
-  const { transactions, loadTransactions, isLoading } = useTransactions();
-  const { loadCategories } = useCategories();
-
-  onMounted(loadTransactions);
-  onMounted(loadCategories);
 </script>

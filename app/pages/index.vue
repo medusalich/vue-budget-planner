@@ -12,11 +12,20 @@
       v-model="isTransactionDialogOpen"
       :transaction-id="selectedTransactionId"
       @deleted="focusNewTransactionButton" />
-    <TransactionList @select="showTransaction($event)" />
+    <TransactionList
+      :transactions="transactions"
+      :is-loading="isLoading"
+      @select="showTransaction($event)" />
   </v-container>
 </template>
 
 <script setup lang="ts">
+  const { transactions, loadTransactions, isLoading } = useTransactions();
+  const { loadCategories } = useCategories();
+
+  onMounted(loadTransactions);
+  onMounted(loadCategories);
+
   const selectedTransactionId = ref<string | null>(null);
   const isTransactionDialogOpen = ref(false);
 
