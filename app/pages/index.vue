@@ -13,7 +13,7 @@
       :transaction-id="selectedTransactionId"
       @deleted="focusNewTransactionButton" />
     <TransactionList
-      :transactions="transactions"
+      :transactions="transactionsInMonth"
       :is-loading="isLoading"
       @select="showTransaction($event)" />
   </v-container>
@@ -25,6 +25,14 @@
 
   onMounted(loadTransactions);
   onMounted(loadCategories);
+
+  const displayedMonth = ref(formatDateAsIsoDate(new Date()).slice(0, 7));
+
+  const transactionsInMonth = computed(() =>
+    transactions.value.filter((transaction) =>
+      isBookedInMonth(transaction.booked_on, displayedMonth.value),
+    ),
+  );
 
   const selectedTransactionId = ref<string | null>(null);
   const isTransactionDialogOpen = ref(false);
