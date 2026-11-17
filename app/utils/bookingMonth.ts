@@ -6,13 +6,20 @@ export function isBookedInMonth(bookedOn: string, month: string): boolean {
   return bookedOn.startsWith(`${month}-`);
 }
 
+/** Reads fixed positions, so the month must be zero-padded `YYYY-MM`; nothing is checked. */
+function splitIsoMonth(month: string): { year: number; monthNumber: number } {
+  return {
+    year: Number(month.slice(0, 4)),
+    monthNumber: Number(month.slice(5, 7)),
+  };
+}
+
 /**
  * Returns the month before the given one; from January it goes back to December of the
  * previous year. Expects and returns `YYYY-MM`, zero-padded.
  */
 export function getPreviousMonth(month: string): string {
-  const year = Number(month.slice(0, 4));
-  const monthNumber = Number(month.slice(5, 7));
+  const { year, monthNumber } = splitIsoMonth(month);
 
   if (monthNumber === 1) {
     return `${year - 1}-12`;
@@ -26,8 +33,7 @@ export function getPreviousMonth(month: string): string {
  * next year. Expects and returns `YYYY-MM`, zero-padded.
  */
 export function getNextMonth(month: string): string {
-  const year = Number(month.slice(0, 4));
-  const monthNumber = Number(month.slice(5, 7));
+  const { year, monthNumber } = splitIsoMonth(month);
 
   if (monthNumber === 12) {
     return `${year + 1}-01`;
@@ -56,8 +62,7 @@ const GERMAN_MONTH_NAMES = [
  * Uses a fixed list of names instead of `Intl`, so no `Date` and no time zone are involved.
  */
 export function formatIsoMonthAsGermanMonth(month: string): string {
-  const year = month.slice(0, 4);
-  const monthNumber = Number(month.slice(5, 7));
+  const { year, monthNumber } = splitIsoMonth(month);
 
   return `${GERMAN_MONTH_NAMES[monthNumber - 1]} ${year}`;
 }
@@ -67,8 +72,7 @@ export function formatIsoMonthAsGermanMonth(month: string): string {
  * The picker counts months from 0, so November comes back as `monthIndex: 10`.
  */
 export function convertIsoMonthToPickerMonth(month: string): { year: number; monthIndex: number } {
-  const year = Number(month.slice(0, 4));
-  const monthNumber = Number(month.slice(5, 7));
+  const { year, monthNumber } = splitIsoMonth(month);
 
   return { year, monthIndex: monthNumber - 1 };
 }
