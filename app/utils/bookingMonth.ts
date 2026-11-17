@@ -50,6 +50,7 @@ const GERMAN_MONTH_NAMES = [
   'November',
   'Dezember',
 ];
+
 /**
  * Writes a `YYYY-MM` month as German text, e.g. `'2026-07'` as `'Juli 2026'`.
  * Uses a fixed list of names instead of `Intl`, so no `Date` and no time zone are involved.
@@ -59,4 +60,15 @@ export function formatIsoMonthAsGermanMonth(month: string): string {
   const monthNumber = Number(month.slice(5, 7));
 
   return `${GERMAN_MONTH_NAMES[monthNumber - 1]} ${year}`;
+}
+
+/**
+ * Splits a `YYYY-MM` month into the numbers the month picker works with.
+ * The picker counts months from 0, so November comes back as `monthIndex: 10`.
+ */
+export function convertIsoMonthToPickerMonth(month: string): { year: number; monthIndex: number } {
+  const year = Number(month.slice(0, 4));
+  const monthNumber = Number(month.slice(5, 7));
+
+  return { year, monthIndex: monthNumber - 1 };
 }
