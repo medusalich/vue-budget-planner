@@ -76,3 +76,11 @@ export function convertIsoMonthToPickerMonth(month: string): { year: number; mon
 
   return { year, monthIndex: monthNumber - 1 };
 }
+
+/**
+ * Joins the numbers the month picker works with into a `YYYY-MM` month.
+ * The picker counts months from 0, so `monthIndex: 10` becomes November.
+ */
+export function convertPickerMonthToIsoMonth(year: number, monthIndex: number): string {
+  return `${year}-${String(monthIndex + 1).padStart(2, '0')}`;
+}

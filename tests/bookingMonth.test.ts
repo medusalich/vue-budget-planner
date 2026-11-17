@@ -5,6 +5,7 @@ import {
   getNextMonth,
   formatIsoMonthAsGermanMonth,
   convertIsoMonthToPickerMonth,
+  convertPickerMonthToIsoMonth,
 } from '../app/utils/bookingMonth';
 
 describe('isBookedInMonth', () => {
@@ -54,5 +55,15 @@ describe('formatIsoMonthAsGermanMonth', () => {
 describe('convertIsoMonthToPickerMonth', () => {
   it('splits the month into year and a month index that starts at 0', () => {
     expect(convertIsoMonthToPickerMonth('2026-11')).toEqual({ year: 2026, monthIndex: 10 });
+  });
+});
+
+describe('convertPickerMonthToIsoMonth', () => {
+  it('joins year and a month index that starts at 0 into a month', () => {
+    expect(convertPickerMonthToIsoMonth(2026, 10)).toBe('2026-11');
+  });
+
+  it('pads a single-digit month with a leading zero', () => {
+    expect(convertPickerMonthToIsoMonth(2026, 0)).toBe('2026-01');
   });
 });
