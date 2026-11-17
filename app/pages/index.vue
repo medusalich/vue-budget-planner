@@ -12,6 +12,7 @@
       v-model="isTransactionDialogOpen"
       :transaction-id="selectedTransactionId"
       @deleted="focusNewTransactionButton" />
+    <MonthSwitcher v-model="displayedMonth" />
     <TransactionList
       :transactions="transactionsInMonth"
       :is-loading="isLoading"
