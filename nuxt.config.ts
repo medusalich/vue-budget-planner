@@ -27,6 +27,8 @@ export default defineNuxtConfig({
 
   vuetify: {
     vuetifyOptions: {
+      locale: { locale: 'de' },
+      localeMessages: ['de'],
       defaults: {
         VBtn: { rounded: 'lg' },
         VCard: { rounded: 'lg' },
