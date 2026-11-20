@@ -13,6 +13,7 @@
       :transaction-id="selectedTransactionId"
       @deleted="focusNewTransactionButton" />
     <MonthSwitcher v-model="displayedMonth" />
+    <MonthTotalsOverview :totals="monthTotals" />
     <TransactionList
       :transactions="transactionsInMonth"
       :is-loading="isLoading"
@@ -22,7 +23,7 @@
 
 <script setup lang="ts">
   const { transactions, loadTransactions, isLoading } = useTransactions();
-  const { loadCategories } = useCategories();
+  const { categories, loadCategories } = useCategories();
 
   onMounted(loadTransactions);
   onMounted(loadCategories);
@@ -34,6 +35,8 @@
       isBookedInMonth(transaction.booked_on, displayedMonth.value),
     ),
   );
+
+  const monthTotals = computed(() => calculateMonthTotals(transactionsInMonth.value, categories.value));
 
   const selectedTransactionId = ref<string | null>(null);
   const isTransactionDialogOpen = ref(false);
