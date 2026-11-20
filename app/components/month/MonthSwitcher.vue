@@ -18,6 +18,7 @@
           <span aria-live="polite">{{ formatIsoMonthAsGermanMonth(month) }}</span>
         </v-btn>
       </template>
+
       <v-sheet>
         <div class="d-flex align-center justify-space-between px-2 pt-2">
           <v-btn
@@ -26,13 +27,14 @@
             density="comfortable"
             aria-label="Vorheriges Jahr"
             @click.stop="pickerYear--" />
-          <span aria-live="polite">{{ pickerYear }}</span>
+          <span :id="pickerYearId" tabindex="-1" aria-live="polite">{{ pickerYear }}</span>
           <v-btn
             icon="mdi-chevron-right"
             variant="text"
             density="comfortable"
             aria-label="Nächstes Jahr"
-            @click.stop="pickerYear++" />
+            :disabled="pickerYear >= currentYear"
+            @click.stop="showNextPickerYear" />
         </div>
         <v-date-picker-months
           :model-value="displayedPickerMonth.monthIndex"
@@ -68,6 +70,7 @@
   const currentMonth = formatDateAsIsoDate(new Date()).slice(0, 7);
   const isAtCurrentMonth = computed(() => month.value >= currentMonth);
   const displayedPickerMonth = computed(() => convertIsoMonthToPickerMonth(month.value));
+  const currentYear = convertIsoMonthToPickerMonth(currentMonth).year;
   const pickerYear = ref(displayedPickerMonth.value.year);
 
   function showDisplayedYearOnOpen(isOpen: boolean) {
@@ -81,7 +84,12 @@
   }
 
   const monthNameId = useId();
+  const pickerYearId = useId();
 
+  /**
+   * Catches focus wherever the clicked button gets disabled or closes with the menu.
+   * Found by id, because the menu's activator props replace a template ref.
+   */
   function focusMonthName() {
     document.getElementById(monthNameId)?.focus();
   }
@@ -103,5 +111,14 @@
   function showPickerMonth(monthIndex: number) {
     month.value = convertPickerMonthToIsoMonth(pickerYear.value, monthIndex);
     focusMonthName();
+  }
+
+  function showNextPickerYear() {
+    pickerYear.value++;
+
+    if (pickerYear.value >= currentYear) {
+      // Moves focus to the year before the next arrow gets disabled.
+      document.getElementById(pickerYearId)?.focus();
+    }
   }
 </script>
