@@ -18,10 +18,11 @@
           <span aria-live="polite">{{ formatIsoMonthAsGermanMonth(month) }}</span>
         </v-btn>
       </template>
-      <v-sheet border>
+      <v-sheet>
         <v-date-picker-months
           :model-value="displayedPickerMonth.monthIndex"
           :year="displayedPickerMonth.year"
+          :allowed-months="isPickerMonthSelectable"
           @update:model-value="showPickerMonth" />
       </v-sheet>
     </v-menu>
@@ -53,6 +54,10 @@
   const isAtCurrentMonth = computed(() => month.value >= currentMonth);
   const displayedPickerMonth = computed(() => convertIsoMonthToPickerMonth(month.value));
 
+  function isPickerMonthSelectable(monthIndex: number) {
+    return convertPickerMonthToIsoMonth(displayedPickerMonth.value.year, monthIndex) <= currentMonth;
+  }
+
   const monthNameId = useId();
 
   function focusMonthName() {
@@ -64,14 +69,12 @@
     month.value = nextMonth;
 
     if (nextMonth >= currentMonth) {
-      // Moves focus off the next arrow before it gets disabled.
       focusMonthName();
     }
   }
 
   function showCurrentMonth() {
     month.value = currentMonth;
-    // Moves focus off the button before it gets disabled.
     focusMonthName();
   }
 
