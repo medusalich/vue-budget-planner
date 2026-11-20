@@ -1,6 +1,7 @@
 <template>
   <v-container>
     <h1 class="text-h4 mb-4">Haushaltsbuch</h1>
+
     <v-btn
       id="new-transaction-button"
       color="primary"
@@ -8,12 +9,18 @@
       @click="startNewTransaction">
       Buchung erfassen
     </v-btn>
+
     <TransactionDialog
       v-model="isTransactionDialogOpen"
       :transaction-id="selectedTransactionId"
+      :displayed-month="displayedMonth"
+      @saved="showMonthOfBookedOn"
       @deleted="focusNewTransactionButton" />
+
     <MonthSwitcher v-model="displayedMonth" />
+
     <MonthTotalsOverview :totals="monthTotals" />
+
     <TransactionList
       :month="displayedMonth"
       :has-any-transactions="transactions.length > 0"
@@ -37,6 +44,10 @@
       isBookedInMonth(transaction.booked_on, displayedMonth.value),
     ),
   );
+
+  function showMonthOfBookedOn(bookedOn: string) {
+    displayedMonth.value = getIsoMonthOfIsoDate(bookedOn);
+  }
 
   const monthTotals = computed(() => calculateMonthTotals(transactionsInMonth.value, categories.value));
 

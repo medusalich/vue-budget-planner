@@ -147,7 +147,7 @@
         </v-card-actions>
       </template>
       <v-snackbar v-model="isSavedNoticeVisible" attach contained location="center" color="success">
-        <v-icon icon="mdi-check-circle" /> Buchung gespeichert
+        <v-icon icon="mdi-check-circle" /> {{ savedNoticeText }}
       </v-snackbar>
     </v-card>
   </v-dialog>
@@ -157,8 +157,8 @@
   import type { CategoryType } from '~/types';
   import type { SubmitEventPromise } from 'vuetify';
 
-  const props = defineProps<{ transactionId: string | null }>();
-  const emit = defineEmits<{ deleted: [] }>();
+  const props = defineProps<{ transactionId: string | null; displayedMonth: string }>();
+  const emit = defineEmits<{ deleted: []; saved: [bookedOn: string] }>();
   const isOpen = defineModel<boolean>();
   const selectedCategoryType = ref<CategoryType | null>(null);
   const { selectableCategoriesFor, findCategoryById } = useCategories();
@@ -220,6 +220,7 @@
   }
 
   const enteredNote = ref('');
+  const savedNoticeText = ref('Buchung gespeichert');
 
   const { addTransaction, findTransactionById, removeTransaction, updateTransaction } =
     useTransactions();
@@ -253,6 +254,12 @@
       return;
     } else {
       await addTransaction(enteredTransaction);
+      const bookedMonth = getIsoMonthOfIsoDate(enteredTransaction.booked_on);
+      savedNoticeText.value =
+        bookedMonth === props.displayedMonth
+          ? 'Buchung gespeichert'
+          : `Buchung im ${formatIsoMonthAsGermanMonth(bookedMonth)} gespeichert`;
+      emit('saved', enteredTransaction.booked_on);
     }
 
     await clearEnteredFields();
