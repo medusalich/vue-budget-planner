@@ -15,6 +15,8 @@
     <MonthSwitcher v-model="displayedMonth" />
     <MonthTotalsOverview :totals="monthTotals" />
     <TransactionList
+      :month="displayedMonth"
+      :has-any-transactions="transactions.length > 0"
       :transactions="transactionsInMonth"
       :is-loading="isLoading"
       @select="showTransaction($event)" />

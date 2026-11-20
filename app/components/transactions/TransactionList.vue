@@ -5,10 +5,14 @@
     <p class="mt-3">Buchungen werden geladen</p>
   </div>
   <v-empty-state
-    v-else-if="transactions.length === 0"
+    v-else-if="!hasAnyTransactions"
     title="Leer wie ein Portemonnaie am letzten Tag des Monats."
     text="Noch nichts erfasst. Trag die erste Buchung ein,
     dann füllt sich wenigstens die Liste." />
+  <v-empty-state
+    v-else-if="transactions.length === 0"
+    :title="`Ebbe im ${formatIsoMonthAsGermanMonth(month)}.`"
+    text="Die Flut kommt mit der ersten Buchung, oder du blätterst mit den Pfeilen in einen anderen Monat." />
   <v-sheet v-else max-width="800" class="border-sm">
     <v-row class="d-none d-md-flex border-b-sm ma-0" aria-hidden="true">
       <v-col md="2">Datum</v-col>
@@ -30,7 +34,12 @@
 <script setup lang="ts">
   import type { Transaction } from '~/types';
 
-  defineProps<{ transactions: Transaction[]; isLoading: boolean }>();
+  defineProps<{
+    transactions: Transaction[];
+    isLoading: boolean;
+    month: string;
+    hasAnyTransactions: boolean;
+  }>();
 
   const emit = defineEmits<{ select: [transactionId: string] }>();
 </script>
