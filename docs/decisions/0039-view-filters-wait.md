@@ -1,6 +1,6 @@
 # 0039 — View filters wait
 
-**Status:** accepted
+**Status:** superseded by [0051](0051-the-list-shows-one-month-at-a-time.md)
 **Date:** 2026-09-14
 
 ## Context

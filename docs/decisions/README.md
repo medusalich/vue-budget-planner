@@ -57,6 +57,8 @@ is in [0000-template.md](0000-template.md).
 - [0022](0022-imports-use-the-alias-where-a-typescript-project-resolves-it.md) — Imports use the alias where a TypeScript project resolves it
 - [0024](0024-logic-leaves-the-component.md) — Logic leaves the component
 - [0034](0034-calculation-is-separated-from-input-and-output.md) — Calculation is separated from input and output
+- [0052](0052-the-page-loads-what-several-components-show.md) — The page loads what several components show
+- [0053](0053-a-month-is-a-yyyy-mm-string.md) — A month is a `YYYY-MM` string
 
 ### The interface
 
@@ -66,6 +68,9 @@ is in [0000-template.md](0000-template.md).
 - [0031](0031-accessibility-targets-wcag-2-2-level-aa.md) — Accessibility targets WCAG 2.2 Level AA
 - [0032](0032-appearance-comes-from-props.md) — Appearance comes from props
 - [0050](0050-label-contrast-is-raised-through-the-theme.md) — Label contrast is raised through the theme
+- [0055](0055-the-month-row-stays-on-one-line.md) — The month row stays on one line
+- [0057](0057-focus-moves-to-the-label-when-its-control-goes.md) — Focus moves to the label when its control goes
+- [0058](0058-the-framework-speaks-german.md) — The framework speaks German
 
 ### The transaction list
 
@@ -73,9 +78,11 @@ is in [0000-template.md](0000-template.md).
 - [0036](0036-the-whole-row-is-the-control.md) — The whole row is the control
 - [0037](0037-deleting-lives-only-in-the-dialog.md) — Deleting lives only in the dialog
 - [0038](0038-the-list-has-one-appearance.md) — The list has one appearance
-- [0039](0039-view-filters-wait.md) — View filters wait
+- [0039](0039-view-filters-wait.md) — View filters wait, superseded by 0051
 - [0040](0040-the-special-states-come-from-the-framework.md) — The special states come from the framework
 - [0049](0049-the-loading-state-is-announced-as-text.md) — The loading state is announced as text
+- [0051](0051-the-list-shows-one-month-at-a-time.md) — The list shows one month at a time
+- [0054](0054-the-month-totals-stand-above-the-list.md) — The month totals stand above the list
 
 ### The transaction dialog
 
@@ -87,6 +94,7 @@ is in [0000-template.md](0000-template.md).
 - [0046](0046-an-icon-only-button-is-a-native-button.md) — An icon-only button is a native button
 - [0047](0047-after-a-delete-the-focus-moves-to-the-new-entry-button.md) — After a delete the focus moves to the new-entry button
 - [0048](0048-enter-in-a-field-saves-the-form.md) — Enter in a field saves the form
+- [0056](0056-the-view-follows-a-saved-transaction-into-its-month.md) — The view follows a saved transaction into its month
 
 ## In order
 
@@ -130,7 +138,7 @@ is in [0000-template.md](0000-template.md).
 | 0036 | 2026-09-14 | accepted | [The whole row is the control](0036-the-whole-row-is-the-control.md)                                                                 |
 | 0037 | 2026-09-14 | accepted | [Deleting lives only in the dialog](0037-deleting-lives-only-in-the-dialog.md)                                                       |
 | 0038 | 2026-09-14 | accepted | [The list has one appearance](0038-the-list-has-one-appearance.md)                                                                   |
-| 0039 | 2026-09-14 | accepted | [View filters wait](0039-view-filters-wait.md)                                                                                       |
+| 0039 | 2026-09-14 | superseded by 0051 | [View filters wait](0039-view-filters-wait.md)                                                                                       |
 | 0040 | 2026-09-14 | accepted | [The special states come from the framework](0040-the-special-states-come-from-the-framework.md)                                     |
 | 0041 | 2026-09-29 | accepted | [Someone else's transaction shows no edit button](0041-someone-elses-transaction-shows-no-edit-button.md)                            |
 | 0042 | 2026-10-20 | accepted | [Saving an edit returns to the transaction](0042-saving-an-edit-returns-to-the-transaction.md)                                       |
@@ -142,3 +150,11 @@ is in [0000-template.md](0000-template.md).
 | 0048 | 2026-10-23 | accepted | [Enter in a field saves the form](0048-enter-in-a-field-saves-the-form.md)                                                           |
 | 0049 | 2026-10-23 | accepted | [The loading state is announced as text](0049-the-loading-state-is-announced-as-text.md)                                             |
 | 0050 | 2026-10-23 | accepted | [Label contrast is raised through the theme](0050-label-contrast-is-raised-through-the-theme.md)                                     |
+| 0051 | 2026-11-20 | accepted | [The list shows one month at a time](0051-the-list-shows-one-month-at-a-time.md)                                                     |
+| 0052 | 2026-11-20 | accepted | [The page loads what several components show](0052-the-page-loads-what-several-components-show.md)                                   |
+| 0053 | 2026-11-20 | accepted | [A month is a `YYYY-MM` string](0053-a-month-is-a-yyyy-mm-string.md)                                                                 |
+| 0054 | 2026-11-20 | accepted | [The month totals stand above the list](0054-the-month-totals-stand-above-the-list.md)                                               |
+| 0055 | 2026-11-20 | accepted | [The month row stays on one line](0055-the-month-row-stays-on-one-line.md)                                                           |
+| 0056 | 2026-11-20 | accepted | [The view follows a saved transaction into its month](0056-the-view-follows-a-saved-transaction-into-its-month.md)                   |
+| 0057 | 2026-11-20 | accepted | [Focus moves to the label when its control goes](0057-focus-moves-to-the-label-when-its-control-goes.md)                             |
+| 0058 | 2026-11-20 | accepted | [The framework speaks German](0058-the-framework-speaks-german.md)                                                                   |
