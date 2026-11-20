@@ -1,10 +1,4 @@
-import type { Category, Transaction } from '~/types';
-
-export interface MonthTotals {
-  incomeCents: number;
-  expenseCents: number;
-  balanceCents: number;
-}
+import type { Category, MonthTotals, Transaction } from '~/types';
 
 /**
  * Adds up income, expenses and balance of the given transactions.
