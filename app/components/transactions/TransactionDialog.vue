@@ -247,9 +247,17 @@
 
     if (dialogMode.value === 'edit' && props.transactionId) {
       await updateTransaction(props.transactionId, enteredTransaction);
+      const bookedMonth = getIsoMonthOfIsoDate(enteredTransaction.booked_on);
+      const isInOtherMonth = bookedMonth !== props.displayedMonth;
+      savedNoticeText.value = `Buchung im ${formatIsoMonthAsGermanMonth(bookedMonth)} gespeichert`;
+      emit('saved', enteredTransaction.booked_on);
       await clearEnteredFields();
       dialogMode.value = 'view';
       await nextTick();
+      // The dialogMode watch hides the notice on every switch.
+      if (isInOtherMonth) {
+        isSavedNoticeVisible.value = true;
+      }
       document.getElementById('close-view-button')?.focus();
       return;
     } else {
@@ -293,6 +301,10 @@
     enteredNote: enteredNote.value,
   }));
   const transactionFormAtEditStart = ref<TransactionForm | null>(null);
+
+  watch(dialogMode, () => {
+    isSavedNoticeVisible.value = false;
+  });
 
   async function closeOrAskToDiscard() {
     const hasInputToLose =
