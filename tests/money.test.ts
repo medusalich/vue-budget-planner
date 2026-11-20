@@ -62,6 +62,10 @@ describe('formatCentsAsSignedEuro', () => {
   it('shows no sign before the income amount', () => {
     expect(formatCentsAsSignedEuro(1250, 'income')).toBe('12,50\u00A0€');
   });
+
+  it('shows no sign when there is no expense', () => {
+    expect(formatCentsAsSignedEuro(0, 'expense')).toBe('0,00\u00A0€');
+  });
 });
 
 describe('formatCentsForAmountInput', () => {
