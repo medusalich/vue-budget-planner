@@ -6,6 +6,7 @@ import {
   formatIsoMonthAsGermanMonth,
   convertIsoMonthToPickerMonth,
   convertPickerMonthToIsoMonth,
+  getIsoMonthOfIsoDate,
 } from '../app/utils/bookingMonth';
 
 describe('isBookedInMonth', () => {
@@ -65,5 +66,11 @@ describe('convertPickerMonthToIsoMonth', () => {
 
   it('pads a single-digit month with a leading zero', () => {
     expect(convertPickerMonthToIsoMonth(2026, 0)).toBe('2026-01');
+  });
+});
+
+describe('getIsoMonthOfIsoDate', () => {
+  it('returns the month of a date', () => {
+    expect(getIsoMonthOfIsoDate('2026-10-28')).toBe('2026-10');
   });
 });

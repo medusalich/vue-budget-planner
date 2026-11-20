@@ -67,7 +67,7 @@
 
   const month = defineModel<string>({ required: true });
 
-  const currentMonth = formatDateAsIsoDate(new Date()).slice(0, 7);
+  const currentMonth = getIsoMonthOfIsoDate(formatDateAsIsoDate(new Date()));
   const isAtCurrentMonth = computed(() => month.value >= currentMonth);
   const displayedPickerMonth = computed(() => convertIsoMonthToPickerMonth(month.value));
   const currentYear = convertIsoMonthToPickerMonth(currentMonth).year;

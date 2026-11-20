@@ -84,3 +84,8 @@ export function convertIsoMonthToPickerMonth(month: string): { year: number; mon
 export function convertPickerMonthToIsoMonth(year: number, monthIndex: number): string {
   return `${year}-${String(monthIndex + 1).padStart(2, '0')}`;
 }
+
+/** Expects the strict `YYYY-MM-DD` format and takes its first seven characters. */
+export function getIsoMonthOfIsoDate(isoDate: string): string {
+  return isoDate.slice(0, 7);
+}

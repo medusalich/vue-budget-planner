@@ -30,7 +30,7 @@
   onMounted(loadTransactions);
   onMounted(loadCategories);
 
-  const displayedMonth = ref(formatDateAsIsoDate(new Date()).slice(0, 7));
+  const displayedMonth = ref(getIsoMonthOfIsoDate(formatDateAsIsoDate(new Date())));
 
   const transactionsInMonth = computed(() =>
     transactions.value.filter((transaction) =>
