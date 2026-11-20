@@ -7,7 +7,7 @@
       density="comfortable"
       @click="month = getPreviousMonth(month)" />
 
-    <v-menu>
+    <v-menu @update:model-value="showDisplayedYearOnOpen">
       <template #activator="{ props: menuActivatorProps }">
         <v-btn
           :id="monthNameId"
@@ -19,9 +19,24 @@
         </v-btn>
       </template>
       <v-sheet>
+        <div class="d-flex align-center justify-space-between px-2 pt-2">
+          <v-btn
+            icon="mdi-chevron-left"
+            variant="text"
+            density="comfortable"
+            aria-label="Vorheriges Jahr"
+            @click.stop="pickerYear--" />
+          <span aria-live="polite">{{ pickerYear }}</span>
+          <v-btn
+            icon="mdi-chevron-right"
+            variant="text"
+            density="comfortable"
+            aria-label="Nächstes Jahr"
+            @click.stop="pickerYear++" />
+        </div>
         <v-date-picker-months
           :model-value="displayedPickerMonth.monthIndex"
-          :year="displayedPickerMonth.year"
+          :year="pickerYear"
           :allowed-months="isPickerMonthSelectable"
           @update:model-value="showPickerMonth" />
       </v-sheet>
@@ -53,9 +68,16 @@
   const currentMonth = formatDateAsIsoDate(new Date()).slice(0, 7);
   const isAtCurrentMonth = computed(() => month.value >= currentMonth);
   const displayedPickerMonth = computed(() => convertIsoMonthToPickerMonth(month.value));
+  const pickerYear = ref(displayedPickerMonth.value.year);
+
+  function showDisplayedYearOnOpen(isOpen: boolean) {
+    if (isOpen) {
+      pickerYear.value = displayedPickerMonth.value.year;
+    }
+  }
 
   function isPickerMonthSelectable(monthIndex: number) {
-    return convertPickerMonthToIsoMonth(displayedPickerMonth.value.year, monthIndex) <= currentMonth;
+    return convertPickerMonthToIsoMonth(pickerYear.value, monthIndex) <= currentMonth;
   }
 
   const monthNameId = useId();
@@ -79,7 +101,7 @@
   }
 
   function showPickerMonth(monthIndex: number) {
-    month.value = convertPickerMonthToIsoMonth(displayedPickerMonth.value.year, monthIndex);
+    month.value = convertPickerMonthToIsoMonth(pickerYear.value, monthIndex);
     focusMonthName();
   }
 </script>
